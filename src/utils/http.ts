@@ -7,6 +7,11 @@ import JSONbig from 'json-bigint'
 //const JSONbig = require('json-bigint')({ 'storeAsString': true });
 const http = axios.create({
   baseURL: '/api',
+  withCredentials: true,
+  headers: {
+    'testHeader': 'aaaa',
+    'nonceId': window.localStorage.getItem("nonceid") === '' ? '' : window.localStorage.getItem("nonceid"),
+  },
   transformResponse: [function (data) {
     try {
       console.log("axios get response" + data)
@@ -19,7 +24,7 @@ const http = axios.create({
 })
 // 添加请求拦截器
 http.interceptors.request.use((config) => {
-  console.log(config.url)
+  console.log('Request Cookies:' + config.headers);
   if (config.url && config.url.startsWith('/login')) {
     // 设置 Cookie
     console.log(config.headers.cookie)
@@ -37,6 +42,7 @@ http.interceptors.request.use((config) => {
 
 // 添加响应拦截器
 http.interceptors.response.use(response => {
+  console.log('Response Set-Cookie:', response.headers);
   // 如果响应是重定向，进行处理
   if (response.status === 302) {
     // 在这里处理重定向逻辑，比如获取重定向地址并跳转
@@ -48,10 +54,10 @@ http.interceptors.response.use(response => {
   }
   return response;
 }, (error) => {
-  if (error.response.status === 401) {
+  if (error.response?.status === 401) {
     setToken('')
     console.log(error.response.headers)
-    window.localStorage.setItem("nonceid", error.response.headers.nonceid)
+    // window.localStorage.setItem("nonceid", "")
     //window.alert("Token expired please login")
     window.location.href = "/loginPage"
     //history.push('/login')

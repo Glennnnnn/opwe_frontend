@@ -29,18 +29,19 @@ class LoginIvt {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'nonceid': window.localStorage.getItem("nonceid")
         }
       }
     )
     console.log(res.data.code)
     if (res.data.code === 200) {
-      const extraHeaders = {
-        'nonceid': res.headers.nonceid
-      };
-      console.log(res)
-      window.localStorage.setItem("nonceid", res.headers.nonceid)
-      const redirectRes = http.get("/oauth2/authorize?response_type=code&client_id=opwe-client&scope=profile openid&redirect_uri=https://www.baidu.com")
+      // const extraHeaders = {
+      //   'nonceid': res.headers.nonceid
+      // };
+      console.log("res with nonceid" + res.headers.nonceid)
+      window.localStorage.setItem("nonceid", JSON.parse(JSON.stringify(res.headers.nonceid)))
+      console.log("after storage" + window.localStorage.getItem("nonceid"))
+      window.location.href = "http://localhost:8085/oauth2/authorize?response_type=code&client_id=opwe-client&scope=profile openid&redirect_uri=https://www.baidu.com"
+      // const redirectRes = http.get("/oauth2/authorize?response_type=code&client_id=opwe-client&scope=profile openid&redirect_uri=https://www.baidu.com")
       // this.token = res.data.data.token
       // this.result = res.data.code
       // setToken(this.token)
