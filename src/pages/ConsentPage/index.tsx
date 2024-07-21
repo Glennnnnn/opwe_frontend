@@ -8,8 +8,15 @@ interface Params {
   state?: string;
 }
 
+interface TokenAccessParams {
+  grant_type?: string;
+  redirect_uri?: string;
+  code?: string;
+}
+
 function ConsentPage() {
   const [consentResult, setConsentResult] = useState({});
+  const [consentParams, setConsentParams] = useState({});
   const [consentScopes, setConsentScopes] = useState({});
   const [consentApprovedScopes, setConsentApprovedScopes] = useState({});
   useEffect(() => {
@@ -25,13 +32,28 @@ function ConsentPage() {
         params
       })
       console.log(res)
+      console.log(res.data)
       if (res.data.code == 200) {
-        setConsentResult(res.data)
+        console.log(res.data.data.scopes)
+        setConsentResult(res.data.data)
+        const newParams: Params = {
+          scope: res.data.data.scopes[0].scope,
+          client_id: res.data.data.clientId,
+          state: res.data.data.state
+        };
+        setConsentParams(newParams)
         setConsentScopes({
-          ...res.data.previouslyApprovedScopes,
-          ...res.data.scopes
+          ...res.data.data.previouslyApprovedScopes,
+          ...res.data.data.scopes
         })
-        setConsentApprovedScopes(res.data.previouslyApprovedScopes.map((e: any) => e.scope))
+        if (
+          res.data.data.previouslyApprovedScopes !== null &&
+          res.data.data.previouslyApprovedScopes !== undefined &&
+          res.data.data.previouslyApprovedScopes.length > 0
+        ) {
+          setConsentApprovedScopes(res.data.previouslyApprovedScopes.map((e: any) => e.scope))
+        }
+        console.log("aaa")
       }
 
       console.log(consentResult)
@@ -39,10 +61,42 @@ function ConsentPage() {
       console.log(consentApprovedScopes)
     }
     queryConsentParams()
-  })
+  }, [])
 
-  const sendConsent = () => {
-    console.log("a")
+  const sendConsent = async () => {
+    console.log(consentParams)
+    const res = await http.post("/oauth2/authorize",
+      consentParams,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }
+      }
+    )
+    const parsedUrl = new URL(res.data.data);
+    const codeValue = parsedUrl.searchParams.get('code')
+    if (codeValue) {
+      console.log('Token stored in local storage:', codeValue);
+      // Store the code value in local storage
+      const tokenAccessParams: TokenAccessParams = {
+        grant_type: "authorization_code",
+        redirect_uri: "http://127.0.0.1:3000",
+        code: codeValue
+      };
+      const tokenRes = await http.post("/oauth2/token",
+        tokenAccessParams,
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          }
+        }
+      )
+      console.log(tokenRes);
+    } else {
+      console.log('Code value not found in URL.');
+    }
+
+
   }
 
 

@@ -40,8 +40,8 @@ class LoginIvt {
       console.log("res with nonceid" + res.headers.nonceid)
       window.localStorage.setItem("nonceid", JSON.parse(JSON.stringify(res.headers.nonceid)))
       console.log("after storage" + window.localStorage.getItem("nonceid"))
-      window.location.href = "http://localhost:8085/oauth2/authorize?response_type=code&client_id=opwe-client&scope=profile openid&redirect_uri=https://www.baidu.com"
-      // const redirectRes = http.get("/oauth2/authorize?response_type=code&client_id=opwe-client&scope=profile openid&redirect_uri=https://www.baidu.com")
+      window.location.href = "http://localhost:8085/oauth2/authorize?response_type=code&client_id=opwe-client&scope=message.read&redirect_uri=http://127.0.0.1:3000"
+      // const redirectRes = http.get("/oauth2/authorize?response_type=code&client_id=opwe-client&scope=profile openid&redirect_uri=http://127.0.0.1:3000")
       // this.token = res.data.data.token
       // this.result = res.data.code
       // setToken(this.token)
