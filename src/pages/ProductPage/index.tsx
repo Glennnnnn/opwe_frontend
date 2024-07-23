@@ -23,6 +23,9 @@ import {
   Tag
 } from 'antd';
 import { set } from 'mobx';
+import {
+  useGetAllTagGroupsQuery,
+} from "@/redux/services/tagApi";
 
 const { Option } = Select;
 
@@ -55,23 +58,32 @@ const ProductPage: React.FC = () => {
   // const [tagGroups, setTagGroups] = useState<string[]>([]);
 
   const [form] = Form.useForm();
-  const baseTagGroups = [
-    {
-      "tagName": "color",
-      "tagValueList": [
-        "white",
-        "black"
-      ]
-    },
-    {
-      "tagName": "size",
-      "tagValueList": [
-        "20mm*20mm",
-        "30mm*30mm"
-      ]
+  // const baseTagGroups = [
+  //   {
+  //     "tagName": "color",
+  //     "tagValueList": [
+  //       "white",
+  //       "black"
+  //     ]
+  //   },
+  //   {
+  //     "tagName": "size",
+  //     "tagValueList": [
+  //       "20mm*20mm",
+  //       "30mm*30mm"
+  //     ]
+  //   }
+  // ]
+
+
+  const { data: baseTagGroups, error, isLoading } = useGetAllTagGroupsQuery()
+  useEffect(() => {
+    if (baseTagGroups) {
+      setTagGroups(baseTagGroups);
     }
-  ]
-  const [tagGroups, setTagGroups] = useState<TagGroup[]>(baseTagGroups)
+  }, [baseTagGroups]);
+
+  const [tagGroups, setTagGroups] = useState<TagGroup[]>([])
 
   const [tagValues, setTagValues] = useState<string[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string | undefined>(undefined);
@@ -100,10 +112,13 @@ const ProductPage: React.FC = () => {
       newTagsToAdd.delete(tagName)
       return newTagsToAdd
     })
-    setTagGroups((preTagGroups: TagGroup[]) => {
-      const baseGroup = baseTagGroups.find(group => group.tagName === tagName);
+    setTagGroups((preTagGroups) => {
+      // Ensure prevTagGroups is handled properly
+      const currentTagGroups = preTagGroups || []; // Default to empty array if undefined
+
+      const baseGroup = baseTagGroups?.find(group => group.tagName === tagName);
       if (!baseGroup) {
-        return preTagGroups; // If no base group found, return the existing tagGroups
+        return currentTagGroups; // If no base group found, return the existing tagGroups
       }
 
       // Merge existing values with base values
