@@ -27,6 +27,12 @@ import {
   useGetAllTagGroupsQuery,
 } from "@/redux/services/tagApi";
 
+import {
+  useGetAllStatusByGroupQuery,
+} from "@/redux/services/statusApi";
+import { Value } from 'sass';
+
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -38,6 +44,11 @@ const formItemLayout = {
 interface TagGroup {
   tagName: string;
   tagValueList: string[];
+}
+
+interface ProductStatus {
+  statusId: bigint
+  statusName: string
 }
 
 const normFile = (e: any) => {
@@ -77,13 +88,18 @@ const ProductPage: React.FC = () => {
 
 
   const { data: baseTagGroups, error, isLoading } = useGetAllTagGroupsQuery()
+  const { data: baseProductStatus } = useGetAllStatusByGroupQuery("product")
   useEffect(() => {
     if (baseTagGroups) {
       setTagGroups(baseTagGroups);
     }
+    if (baseProductStatus) {
+      setProductStatus(baseProductStatus);
+    }
   }, [baseTagGroups]);
 
   const [tagGroups, setTagGroups] = useState<TagGroup[]>([])
+  const [productStatus, setProductStatus] = useState<ProductStatus[]>([])
 
   const [tagValues, setTagValues] = useState<string[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string | undefined>(undefined);
@@ -93,18 +109,6 @@ const ProductPage: React.FC = () => {
   const [addTagModalOpen, setAddTagModalOpen] = useState<boolean>(false)
   const [tagsToAdd, setTagsToAdd] = useState<Map<string, string>>(new Map())
 
-  const handleGroupChange = async (group: string) => {
-    setLoading(true);
-    setSelectedGroup(group);
-    try {
-      const response = await http.get<string[]>(`/api/tag-values/${group}`);
-      setTagValues(response.data);
-    } catch (error) {
-      message.error('Failed to load tag values');
-    } finally {
-      setLoading(false);
-    }
-  };
   //  tag functions
   const handleTagClose = (tagName: string) => {
     setTagsToAdd((preTagsToAdd) => {
@@ -186,28 +190,13 @@ const ProductPage: React.FC = () => {
       <Form.Item label="Plain Text">
         <span className="ant-form-text">China</span>
       </Form.Item>
-      <Form.Item
-        name="select"
-        label="Select"
-        hasFeedback
-        rules={[{ required: true, message: 'Please select your country!' }]}
-      >
-        <Select placeholder="Please select a country">
-          <Option value="china">China</Option>
-          <Option value="usa">U.S.A</Option>
-        </Select>
+
+      <Form.Item name="productName" label="Product Name">
+        <Input />
       </Form.Item>
 
-      <Form.Item
-        name="select-multiple"
-        label="Select[multiple]"
-        rules={[{ required: true, message: 'Please select your favourite colors!', type: 'array' }]}
-      >
-        <Select mode="multiple" placeholder="Please select favourite colors">
-          <Option value="red">Red</Option>
-          <Option value="green">Green</Option>
-          <Option value="blue">Blue</Option>
-        </Select>
+      <Form.Item name="radio-group" label="Radio.Group">
+        <Input />
       </Form.Item>
 
       <Form.Item label="Tags">
@@ -257,7 +246,6 @@ const ProductPage: React.FC = () => {
 
           </Form>
         </Modal>
-
       </Form.Item>
 
       <Form.Item label="product stock">
@@ -269,45 +257,19 @@ const ProductPage: React.FC = () => {
         </span>
       </Form.Item>
 
-      <Form.Item name="switch" label="Switch" valuePropName="checked">
-        <Switch />
-      </Form.Item>
-
-      <Form.Item name="slider" label="Slider">
-        <Slider
-          marks={{
-            0: 'A',
-            20: 'B',
-            40: 'C',
-            60: 'D',
-            80: 'E',
-            100: 'F',
-          }}
-        />
-      </Form.Item>
-
-      <Form.Item name="radio-group" label="Radio.Group">
-        <Radio.Group>
-          <Radio value="a">item 1</Radio>
-          <Radio value="b">item 2</Radio>
-          <Radio value="c">item 3</Radio>
-        </Radio.Group>
-      </Form.Item>
-
       <Form.Item
         name="radio-button"
         label="Radio.Button"
-        rules={[{ required: true, message: 'Please pick an item!' }]}
+      //rules={[{ required: true, message: 'Please pick an item!' }]}
       >
         <Radio.Group>
-          <Radio.Button value="a">item 1</Radio.Button>
+          {productStatus.map(status =>
+            <Radio.Button value={status.statusName} >a</Radio.Button>
+          )}
+          {/* <Radio.Button value="a">item 1</Radio.Button>
           <Radio.Button value="b">item 2</Radio.Button>
-          <Radio.Button value="c">item 3</Radio.Button>
+          <Radio.Button value="c">item 3</Radio.Button> */}
         </Radio.Group>
-      </Form.Item>
-
-      <Form.Item name="rate" label="Rate">
-        <Rate />
       </Form.Item>
 
       <Form.Item label="Upload">
@@ -320,13 +282,6 @@ const ProductPage: React.FC = () => {
             <p className="ant-upload-hint">Support for only single upload.</p>
           </Upload.Dragger>
         </Form.Item>
-      </Form.Item>
-      <Form.Item
-        name="color-picker"
-        label="ColorPicker"
-        rules={[{ required: true, message: 'color is required!' }]}
-      >
-        <ColorPicker />
       </Form.Item>
 
       <Form.Item wrapperCol={{ span: 12, offset: 6 }}>

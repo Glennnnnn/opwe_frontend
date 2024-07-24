@@ -11,6 +11,9 @@ export const tagApi = createApi({
       transformResponse: (responseData: { data: any }) => {
         return responseData.data;
       },
+      // transformResponse: (responseData: { data: { data: any } }) => {
+      //   return responseData.data.data;
+      // }
     })
   })
 })
