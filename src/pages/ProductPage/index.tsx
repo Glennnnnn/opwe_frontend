@@ -59,9 +59,6 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
-const onFinish = (values: any) => {
-  console.log('Received values of form: ', values);
-};
 
 
 const ProductPage: React.FC = () => {
@@ -133,6 +130,11 @@ const ProductPage: React.FC = () => {
     })
   }
 
+
+  const onFinish = (values: any) => {
+    console.log('Received values of form: ', values);
+    console.log(tagsToAdd)
+  };
 
   //  Model functions
   const closeAddTagModel = () => {
@@ -264,7 +266,7 @@ const ProductPage: React.FC = () => {
       >
         <Radio.Group>
           {productStatus.map(status =>
-            <Radio.Button value={status.statusName} >a</Radio.Button>
+            <Radio.Button key={status.statusId} value={status.statusId} >{status.statusName}</Radio.Button>
           )}
           {/* <Radio.Button value="a">item 1</Radio.Button>
           <Radio.Button value="b">item 2</Radio.Button>
