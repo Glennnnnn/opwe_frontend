@@ -22,6 +22,7 @@ import {
   Input,
   Tag
 } from 'antd';
+import type { GetProp, UploadFile, UploadProps } from 'antd';
 import { set } from 'mobx';
 import {
   useGetAllTagGroupsQuery,
@@ -30,9 +31,14 @@ import {
 import {
   useGetAllStatusByGroupQuery,
 } from "@/redux/services/statusApi";
+
+import {
+  useSendNewProductWithFileMutation,
+} from "@/redux/services/productApi";
+
 import { Value } from 'sass';
 
-
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 const { Option } = Select;
 
 const formItemLayout = {
@@ -86,6 +92,8 @@ const ProductPage: React.FC = () => {
 
   const { data: baseTagGroups, error, isLoading } = useGetAllTagGroupsQuery()
   const { data: baseProductStatus } = useGetAllStatusByGroupQuery("product")
+  const [sendNewProductWithFile] = useSendNewProductWithFileMutation();
+
   useEffect(() => {
     if (baseTagGroups) {
       setTagGroups(baseTagGroups);
@@ -97,6 +105,7 @@ const ProductPage: React.FC = () => {
 
   const [tagGroups, setTagGroups] = useState<TagGroup[]>([])
   const [productStatus, setProductStatus] = useState<ProductStatus[]>([])
+  const [fileList, setFileList] = useState<any[]>([]);
 
   const [tagValues, setTagValues] = useState<string[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string | undefined>(undefined);
@@ -130,11 +139,6 @@ const ProductPage: React.FC = () => {
     })
   }
 
-
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    console.log(tagsToAdd)
-  };
 
   //  Model functions
   const closeAddTagModel = () => {
@@ -176,6 +180,65 @@ const ProductPage: React.FC = () => {
     setTagNameSeleted(value)
   }
 
+  const props: UploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+
+      return false;
+    },
+    fileList,
+  };
+
+  const onFinish = async (values: any) => {
+    const formData = new FormData();
+    let file: File | Blob | null = null;
+    let nonFileData: { [key: string]: any } = {};
+    fileList.forEach(file => {
+      if (file.originFileObj) {
+        formData.append('productImgs', file.originFileObj);
+      } else {
+        formData.append('productImgs', file);
+      }
+    });
+    // fileList.forEach(file => {
+    //   formData.append('productImgs', file as FileType);
+    // });
+    for (let key in values) {
+      if (values[key] instanceof File || values[key] instanceof Blob) {
+        file = values[key];
+      } else {
+        nonFileData[key] = values[key];
+      }
+    }
+
+    formData.append('productData', new Blob([JSON.stringify(nonFileData)], { type: 'application/json' }));
+    if (file) {
+      formData.append('productImg', file);
+    }
+
+
+    await sendNewProductWithFile(formData)
+      .unwrap()
+      .then((payload) => {
+        console.log(payload)
+        if (payload.msg === "SUCCESS") {
+          message.success("发送信息成功");
+          form.resetFields();
+        } else {
+          message.error("发送信息失败");
+        }
+      })
+      .catch((error) => message.error("Something went wrong..."));
+  };
+
+
+
   return (
     <Form
       name="validate_other"
@@ -197,11 +260,11 @@ const ProductPage: React.FC = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item name="radio-group" label="Radio.Group">
+      <Form.Item name="productDesc" label="Product description">
         <Input />
       </Form.Item>
 
-      <Form.Item label="Tags">
+      <Form.Item name="tags" label="Tags">
         {Array.from(tagsToAdd.entries()).map(([tagName, tagValue]) => (
           <Tag closable key={tagName} onClose={() => handleTagClose(tagName)}>{tagName}: {tagValue}</Tag>
         ))}
@@ -260,8 +323,8 @@ const ProductPage: React.FC = () => {
       </Form.Item>
 
       <Form.Item
-        name="radio-button"
-        label="Radio.Button"
+        name="productStatus"
+        label="Product Status"
       //rules={[{ required: true, message: 'Please pick an item!' }]}
       >
         <Radio.Group>
@@ -276,7 +339,7 @@ const ProductPage: React.FC = () => {
 
       <Form.Item label="Upload">
         <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-          <Upload.Dragger name="files" action="/upload.do">
+          <Upload.Dragger name="files" {...props}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>

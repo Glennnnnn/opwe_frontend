@@ -60,16 +60,13 @@ export const fetchBaseQueryByAxios = fetchBaseQuery({
     Accept: "application/json",
     "Content-Type": "application/json",
   }
-  // },
-  // prepareHeaders: (headers, { getState } : { getState: () => RootState }) => {
-  // 	const token = getState().auth.token;
+});
 
-  // 	// If we have a token set in state, let's assume that we should be passing it.
-  // 	if (token) {
-  // 		headers.set("authorization", `Bearer ${token}`);
-  // 	}
 
-  // 	return headers;
+export const axiosPostWithMultiPartQuery = fetchBaseQuery({
+  baseUrl: baseURL,
+  // headers: {
+  //   'Content-Type': 'multipart/form-data',
   // },
 });
 
