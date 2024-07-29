@@ -47,9 +47,20 @@ const formItemLayout = {
 };
 
 
+interface TagValueWithId {
+  tagId: string;
+  tagValue: string;
+}
+
 interface TagGroup {
   tagName: string;
-  tagValueList: string[];
+  tagValueList: TagValueWithId[];
+}
+
+interface TagToAdd {
+  tagId: string
+  tagName: string
+  tagValue: string
 }
 
 interface ProductStatus {
@@ -96,6 +107,7 @@ const ProductPage: React.FC = () => {
 
   useEffect(() => {
     if (baseTagGroups) {
+      console.log(baseTagGroups)
       setTagGroups(baseTagGroups);
     }
     if (baseProductStatus) {
@@ -111,21 +123,20 @@ const ProductPage: React.FC = () => {
   const [selectedGroup, setSelectedGroup] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [tagNameSeleted, setTagNameSeleted] = useState<string | undefined>(undefined);
+  const [isTagNameInModalSeleted, setIsTagNameInModalSeleted] = useState<string | undefined>(undefined);
   const [addTagModalOpen, setAddTagModalOpen] = useState<boolean>(false)
-  const [tagsToAdd, setTagsToAdd] = useState<Map<string, string>>(new Map())
+  const [tagsToAdd, setTagsToAdd] = useState<TagToAdd[]>([])
 
   //  tag functions
-  const handleTagClose = (tagName: string) => {
+  const handleTagClose = (tagId: string, tagName: string) => {
     setTagsToAdd((preTagsToAdd) => {
-      const newTagsToAdd = new Map(preTagsToAdd)
-      newTagsToAdd.delete(tagName)
-      return newTagsToAdd
+      preTagsToAdd.filter(tag => tag.tagId !== tagId);
+      return preTagsToAdd
     })
     setTagGroups((preTagGroups) => {
       // Ensure prevTagGroups is handled properly
       const currentTagGroups = preTagGroups || []; // Default to empty array if undefined
-
+      baseTagGroups?.find(group => group.tagName === tagName);
       const baseGroup = baseTagGroups?.find(group => group.tagName === tagName);
       if (!baseGroup) {
         return currentTagGroups; // If no base group found, return the existing tagGroups
@@ -153,17 +164,24 @@ const ProductPage: React.FC = () => {
     form
       .validateFields()
       .then((values) => {
+        const { tagName, tagId } = values;
         form.resetFields()
         closeAddTagModel()
         setTagsToAdd((preTagsToadd) => {
-          const newTagsToAdd = new Map(preTagsToadd)
-          newTagsToAdd.set(values.tagName, values.tagValue)
-          return newTagsToAdd
+          let tagGroup = baseTagGroups?.find((group: TagGroup) => group.tagName === tagName);
+          let newTag: TagToAdd = {
+            tagId,
+            tagName,
+            tagValue: tagGroup.tagValueList?.find((tag: TagValueWithId) => tag.tagId === tagId).tagValue,
+          }
+          return [
+            ...preTagsToadd,
+            newTag
+          ]
         })
         setTagGroups(preTagGroups =>
           preTagGroups.filter(tagGroup => tagGroup.tagName !== values.tagName)
         )
-        console.log(tagGroups)
       })
       .catch((info) => {
         console.log('Validate Failed:', info);
@@ -172,12 +190,12 @@ const ProductPage: React.FC = () => {
 
   const handleModalCancel = () => {
     form.resetFields()
-    setTagNameSeleted(undefined)
+    setIsTagNameInModalSeleted(undefined)
     closeAddTagModel()
   }
 
   const handleTagNameSeleted = (value: string) => {
-    setTagNameSeleted(value)
+    setIsTagNameInModalSeleted(value)
   }
 
   const props: UploadProps = {
@@ -265,9 +283,16 @@ const ProductPage: React.FC = () => {
       </Form.Item>
 
       <Form.Item name="tags" label="Tags">
-        {Array.from(tagsToAdd.entries()).map(([tagName, tagValue]) => (
-          <Tag closable key={tagName} onClose={() => handleTagClose(tagName)}>{tagName}: {tagValue}</Tag>
-        ))}
+        {tagsToAdd.map((tagToAdd: TagToAdd) => {
+          console.log(tagToAdd)
+          return <Tag
+            closable
+            key={tagToAdd.tagId}
+            onClose={() => handleTagClose(tagToAdd.tagId, tagToAdd.tagName)}
+          >
+            {tagToAdd.tagName}: {tagToAdd.tagValue}
+          </Tag>
+        })}
         <PlusCircleOutlined onClick={openAddTagModel} />
         {/* <Button icon={<PlusCircleOutlined />} onClick={() => setAddTagModalOpen(true)}>
         </Button> */}
@@ -297,14 +322,14 @@ const ProductPage: React.FC = () => {
 
 
             <Form.Item
-              name="tagValue"
+              name="tagId"
               label="tagValue"
               rules={[{ required: true, message: 'Please input your email!' }]}
             >
-              <Select placeholder="Please select a tag name" disabled={tagNameSeleted ? false : true}>
-                {tagNameSeleted ? tagGroups.find(tagGroup => tagGroup.tagName === tagNameSeleted)?.tagValueList.map(tagValue => (
-                  <Option key={tagValue} value={tagValue}>{tagValue}</Option>
-                )) :
+              <Select placeholder="Please select a tag name" disabled={isTagNameInModalSeleted ? false : true}>
+                {isTagNameInModalSeleted ? tagGroups.find(tagGroup => tagGroup.tagName === isTagNameInModalSeleted)?.tagValueList.map(TagValueWithId =>
+                  <Option key={TagValueWithId.tagId} value={TagValueWithId.tagId}>{TagValueWithId.tagValue}</Option>
+                ) :
                   undefined}
               </Select>
             </Form.Item>
@@ -331,9 +356,6 @@ const ProductPage: React.FC = () => {
           {productStatus.map(status =>
             <Radio.Button key={status.statusId} value={status.statusId} >{status.statusName}</Radio.Button>
           )}
-          {/* <Radio.Button value="a">item 1</Radio.Button>
-          <Radio.Button value="b">item 2</Radio.Button>
-          <Radio.Button value="c">item 3</Radio.Button> */}
         </Radio.Group>
       </Form.Item>
 
