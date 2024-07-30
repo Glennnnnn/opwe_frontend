@@ -130,8 +130,8 @@ const ProductPage: React.FC = () => {
   //  tag functions
   const handleTagClose = (tagId: string, tagName: string) => {
     setTagsToAdd((preTagsToAdd) => {
-      preTagsToAdd.filter(tag => tag.tagId !== tagId);
-      return preTagsToAdd
+      let tagsToAdd = preTagsToAdd.filter(tag => tag.tagId !== tagId);
+      return tagsToAdd
     })
     setTagGroups((preTagGroups) => {
       // Ensure prevTagGroups is handled properly
@@ -234,16 +234,21 @@ const ProductPage: React.FC = () => {
         nonFileData[key] = values[key];
       }
     }
-
+    let tagIdList = []
+    for (let tag of tagsToAdd) {
+      tagIdList.push(tag.tagId)
+    }
+    nonFileData["productTags"] = tagIdList
+    console.log(nonFileData)
     formData.append('productData', new Blob([JSON.stringify(nonFileData)], { type: 'application/json' }));
     if (file) {
       formData.append('productImg', file);
     }
 
-
     await sendNewProductWithFile(formData)
       .unwrap()
       .then((payload) => {
+        console.log("aaa")
         console.log(payload)
         if (payload.msg === "SUCCESS") {
           message.success("发送信息成功");
@@ -252,7 +257,10 @@ const ProductPage: React.FC = () => {
           message.error("发送信息失败");
         }
       })
-      .catch((error) => message.error("Something went wrong..."));
+      .catch((error) => {
+        console.log(error)
+        message.error("Something went wrong...")
+      });
   };
 
 
@@ -284,7 +292,6 @@ const ProductPage: React.FC = () => {
 
       <Form.Item name="tags" label="Tags">
         {tagsToAdd.map((tagToAdd: TagToAdd) => {
-          console.log(tagToAdd)
           return <Tag
             closable
             key={tagToAdd.tagId}

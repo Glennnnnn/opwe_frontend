@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQueryByAxios } from "@/redux/api/fetchBaseQueryHelper";
 
 export const tagApi = createApi({
-  reducerPath: "product",
+  reducerPath: "tag",
   baseQuery: fetchBaseQueryByAxios,
   endpoints: builder => ({
     getAllTagGroups: builder.query<any[], void>({

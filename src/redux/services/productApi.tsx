@@ -3,16 +3,16 @@ import { fetchBaseQueryByAxios, axiosBaseQueryWithBigInt, axiosPostWithMultiPart
 
 export const productApi = createApi({
   //equals to the name when we user createSlice
-  reducerPath: "status",
+  reducerPath: "product",
   //config async request
   baseQuery: axiosPostWithMultiPartQuery,
   endpoints: builder => ({
     sendNewProductWithFile: builder.mutation<any, FormData>({
-      query: (initialPost) => {
+      query: (formData) => {
         return {
           url: `/productService/product/newProductWithImg`,
           method: `post`,
-          body: initialPost
+          body: formData
         }
       }
     })
