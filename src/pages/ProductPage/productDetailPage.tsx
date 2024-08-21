@@ -10,7 +10,7 @@ interface Product {
   image: string; // URL or Base64 string of the image
 }
 
-const ProductListPage: React.FC = () => {
+const ProductDetailPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleAddProductButtonClick = () => {
@@ -70,4 +70,4 @@ const ProductListPage: React.FC = () => {
 
 }
 
-export default ProductListPage;
+export default ProductDetailPage;
