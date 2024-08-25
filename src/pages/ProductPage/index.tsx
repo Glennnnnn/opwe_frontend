@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 interface Product {
-  key: string;
-  name: string;
+  productId: string;
+  productName: string;
   price: number;
   image: string; // URL or Base64 string of the image
 }
@@ -18,19 +18,19 @@ const ProductListPage: React.FC = () => {
   };
 
   const handleProductDetailPageClick = () => {
-    navigate('/addProductPage'); // Replace with your actual route path
+    navigate('/productDetailPage'); // Replace with your actual route path
   };
 
   const dataSource: Product[] = [
     {
-      key: '1',
-      name: 'Product 1',
+      productId: '1',
+      productName: 'Product 1',
       price: 100,
       image: 'https://via.placeholder.com/150', // Example image URL
     },
     {
-      key: '2',
-      name: 'Product 2',
+      productId: '2',
+      productName: 'Product 2',
       price: 150,
       image: 'https://via.placeholder.com/150', // Example image URL
     },
@@ -45,9 +45,17 @@ const ProductListPage: React.FC = () => {
       render: (text: string) => <img src={text} alt="Product" style={{ width: 50, height: 50 }} />, // Adjust size as needed
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Product Name',
+      dataIndex: 'productName',
+      key: 'productName',
+      render: (text: string, record: Product) => (
+        <a
+          onClick={() => navigate(`/productDetailPage/${record.productId}`)}
+          style={{ cursor: 'pointer', color: 'blue' }}
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: 'Price',

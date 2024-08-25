@@ -20,7 +20,7 @@ import ConsentPage from './pages/ConsentPage';
 import BlogListPage from './pages/BlogListPage';
 import AddProductPage from './pages/ProductPage/addProductPage';
 import ProductListPage from './pages/ProductPage/index';
-
+import ProductDetailPage from './pages/ProductPage/productDetailPage';
 
 const layoutStyle = {
   borderRadius: 8,
@@ -89,6 +89,7 @@ const App: React.FC = () => {
               <Route path="/consentListPage" element={<BlogListPage />} />
               <Route path="/productPage" element={<ProductListPage />} />
               <Route path="/addProductPage" element={<AddProductPage />} />
+              <Route path="/productDetailPage/:productId" element={<ProductDetailPage />} />
             </Routes>
           </Content>
         </Layout>
