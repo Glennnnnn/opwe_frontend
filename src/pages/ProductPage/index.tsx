@@ -23,13 +23,13 @@ const ProductListPage: React.FC = () => {
 
   const dataSource: Product[] = [
     {
-      productId: '1',
+      productId: '7225017727965073408',
       productName: 'Product 1',
       price: 100,
       image: 'https://via.placeholder.com/150', // Example image URL
     },
     {
-      productId: '2',
+      productId: '7225020561393586176',
       productName: 'Product 2',
       price: 150,
       image: 'https://via.placeholder.com/150', // Example image URL

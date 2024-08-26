@@ -15,10 +15,15 @@ export const productApi = createApi({
           body: formData
         }
       }
-    })
+    }),
+    getSingleProductWithImg: builder.query<any, string>({
+      query: (productId) =>
+        `/productService/product/singleProductWithImg?productId=${productId}`,
+    }),
   })
 })
 
 export const {
-  useSendNewProductWithFileMutation
+  useSendNewProductWithFileMutation,
+  useGetSingleProductWithImgQuery
 } = productApi;
