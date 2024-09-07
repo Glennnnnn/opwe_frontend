@@ -1,0 +1,22 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  height: 120%;
+}
+
+.table-container {
+  height: 10px;
+  flex-grow: 1;
+  overflow: hidden;
+  /* Ensures no overflow outside the container */
+  display: flex;
+  flex-direction: column;
+}
