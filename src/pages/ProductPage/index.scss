@@ -6,17 +6,16 @@ body,
   padding: 0;
 }
 
-.page-layout {
-  display: flex;
-  flex-direction: column;
-  height: 120%;
-}
+// .page-layout {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+// }
 
 .table-container {
-  height: 10px;
-  flex-grow: 1;
-  overflow: hidden;
-  /* Ensures no overflow outside the container */
+  height: 90%;
+  flex-grow: 1; // Ensures the container expands to fill the available space
+  // overflow: auto; // Allows scrolling if the content overflows
   display: flex;
   flex-direction: column;
 }

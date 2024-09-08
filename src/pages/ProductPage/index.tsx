@@ -148,12 +148,19 @@ const ProductListPage: React.FC = () => {
     },
   ];
   // Add more columns as needed
-  return <div className="page-layout">
-    <Card style={{ height: '5%' }}>
-      <Button type="primary" onClick={handleAddProductButtonClick}>
+  return <>
+    <Card
+      style={{
+        height: '8%',
+        padding: '2px 2px',
+        display: 'flex',            // Flexbox for alignment
+        alignItems: 'center',       // Center vertically
+        justifyContent: 'flex-end'
+      }}>
+      <Button type="primary" onClick={handleAddProductButtonClick} >
         Go to Target Page
       </Button>
-      <Button type="primary" onClick={handleProductDetailPageClick}>
+      <Button type="primary" onClick={handleProductDetailPageClick} style={{ marginLeft: '8px' }}>
         Go to Target Page
       </Button>
     </Card>
@@ -166,7 +173,7 @@ const ProductListPage: React.FC = () => {
         pagination={tableParams.pagination}
       />
     </div>
-  </div>
+  </>
 
 }
 
