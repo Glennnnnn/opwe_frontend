@@ -3,6 +3,7 @@ import { Table, Button, Card } from 'antd';
 import type { GetProp, TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import type { SorterResult } from 'antd/es/table/interface';
+import { PlusOutlined } from '@ant-design/icons';
 import {
   useGetProductListWithParamsQuery,
 } from "@/redux/services/productApi";
@@ -73,6 +74,7 @@ const ProductListPage: React.FC = () => {
 
 
   useEffect(() => {
+    console.log("useEffect called", productListDataLoading)
     //console.log("useEffect called", { baseProductListData, tableParams });
     // while (isLoading) {
     //   console.log("Loading...");
@@ -81,6 +83,7 @@ const ProductListPage: React.FC = () => {
       //console.log(baseProductListData.data)
       setProductList(baseProductListData.data.productResultList);
       setProductCategoryList(baseProductCategoryListData.data);
+      console.log(productList)
       setTableParams({
         ...tableParams,
         pagination: {
@@ -94,13 +97,14 @@ const ProductListPage: React.FC = () => {
     }
 
   }, [
+    baseProductListData,
     productListDataLoading,
-    productCategoryListDataLoading,
-    tableParams.pagination?.current,
-    tableParams.pagination?.pageSize,
-    tableParams?.sortOrder,
-    tableParams?.sortField,
-    JSON.stringify(tableParams.filters),
+    // productCategoryListDataLoading,
+    // tableParams.pagination?.current,
+    // tableParams.pagination?.pageSize,
+    // tableParams?.sortOrder,
+    // tableParams?.sortField,
+    // JSON.stringify(tableParams.filters),
   ]);
 
 
@@ -157,8 +161,8 @@ const ProductListPage: React.FC = () => {
         alignItems: 'center',       // Center vertically
         justifyContent: 'flex-end'
       }}>
-      <Button type="primary" onClick={handleAddProductButtonClick} >
-        Go to Target Page
+      <Button type="primary" onClick={handleAddProductButtonClick} icon={<PlusOutlined />}>
+        Create New product
       </Button>
       <Button type="primary" onClick={handleProductDetailPageClick} style={{ marginLeft: '8px' }}>
         Go to Target Page
