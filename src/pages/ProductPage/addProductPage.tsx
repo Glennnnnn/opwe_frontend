@@ -37,6 +37,7 @@ import {
 } from "@/redux/services/productApi";
 
 import { Value } from 'sass';
+import { escape } from 'querystring';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 const { Option } = Select;
@@ -199,6 +200,9 @@ const AddProductPage: React.FC = () => {
   }
 
   const props: UploadProps = {
+    name: 'file',
+    multiple: false,
+    maxCount: 1,
     onRemove: (file) => {
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
@@ -206,8 +210,10 @@ const AddProductPage: React.FC = () => {
       setFileList(newFileList);
     },
     beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-
+      if (fileList.length < 1) {
+        message.info('')
+        setFileList([...fileList, file]);
+      }
       return false;
     },
     fileList,

@@ -21,6 +21,9 @@ import BlogListPage from './pages/BlogListPage';
 import AddProductPage from './pages/ProductPage/addProductPage';
 import ProductListPage from './pages/ProductPage/index';
 import ProductDetailPage from './pages/ProductPage/productDetailPage';
+import InstructionListPage from './pages/InstructionPage/index'
+import AddInstructionVideoPage from './pages/InstructionPage/addInstructionVideoPage'
+
 
 const layoutStyle = {
   borderRadius: 8,
@@ -53,7 +56,12 @@ const App: React.FC = () => {
               {
                 key: '2',
                 icon: <ShoppingOutlined />,
-                label: <Link to="/productPage">productPage</Link>,
+                label: <Link to="/productPage">Product</Link>,
+              },
+              {
+                key: '3',
+                icon: <ShoppingOutlined />,
+                label: <Link to="/introductionPage">Introduction</Link>,
               },
             ]}
           />
@@ -90,6 +98,8 @@ const App: React.FC = () => {
               <Route path="/productPage" element={<ProductListPage />} />
               <Route path="/addProductPage" element={<AddProductPage />} />
               <Route path="/productDetailPage/:productId" element={<ProductDetailPage />} />
+              <Route path="/introductionPage" element={<InstructionListPage />} />
+              <Route path="/introductionPage/addInstructionVideoPage" element={<AddInstructionVideoPage />} />
             </Routes>
           </Content>
         </Layout>
