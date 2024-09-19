@@ -21,7 +21,7 @@ export const productApi = createApi({
   //config async request
   baseQuery: axiosPostWithMultiPartQuery,
   endpoints: builder => ({
-    sendNewProductWithFile: builder.mutation<any, FormData>({
+    createNewProductWithFile: builder.mutation<any, FormData>({
       query: (formData) => {
         return {
           url: `/productService/product/newProductWithImg`,
@@ -51,7 +51,7 @@ export const productApi = createApi({
 })
 
 export const {
-  useSendNewProductWithFileMutation,
+  useCreateNewProductWithFileMutation,
   useGetSingleProductWithImgQuery,
   useGetProductListWithParamsQuery,
   useGetProductCategoryListQuery

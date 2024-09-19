@@ -33,7 +33,7 @@ import {
 } from "@/redux/services/statusApi";
 
 import {
-  useSendNewProductWithFileMutation,
+  useCreateNewProductWithFileMutation,
 } from "@/redux/services/productApi";
 
 import { Value } from 'sass';
@@ -104,7 +104,7 @@ const AddProductPage: React.FC = () => {
 
   const { data: baseTagGroups, error, isLoading } = useGetAllTagGroupsQuery()
   const { data: baseProductStatus } = useGetAllStatusByGroupQuery("product")
-  const [sendNewProductWithFile] = useSendNewProductWithFileMutation();
+  const [createNewProductWithFile] = useCreateNewProductWithFileMutation();
 
   useEffect(() => {
     if (baseTagGroups) {
@@ -223,6 +223,7 @@ const AddProductPage: React.FC = () => {
     const formData = new FormData();
     let file: File | Blob | null = null;
     let nonFileData: { [key: string]: any } = {};
+    console.log(fileList)
     fileList.forEach(file => {
       if (file.originFileObj) {
         formData.append('productImgs', file.originFileObj);
@@ -245,13 +246,14 @@ const AddProductPage: React.FC = () => {
       tagIdList.push(tag.tagId)
     }
     nonFileData["productTags"] = tagIdList
-    console.log(nonFileData)
+    // console.log(nonFileData)
+    // console.log(file)
     formData.append('productData', new Blob([JSON.stringify(nonFileData)], { type: 'application/json' }));
+    //if the form originally contains file data
     if (file) {
       formData.append('productImg', file);
     }
-
-    await sendNewProductWithFile(formData)
+    await createNewProductWithFile(formData)
       .unwrap()
       .then((payload) => {
         console.log("aaa")
