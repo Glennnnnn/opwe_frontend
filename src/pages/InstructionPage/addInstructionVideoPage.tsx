@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Form,
   Input,
@@ -18,8 +19,10 @@ import {
 } from '@ant-design/icons';
 
 const AddInstructionVideoPage: React.FC = () => {
+  const navigate = useNavigate();
+
   // const CHUNK_SIZE = 2 * 1024 * 1024;
-  const CHUNK_SIZE = 100 * 1024;
+  const CHUNK_SIZE = 5 * 1024 * 1024;
   const [form] = Form.useForm();
   const [createNewFile] = useCreateNewFileMutation();
 
@@ -70,6 +73,7 @@ const AddInstructionVideoPage: React.FC = () => {
 
     const fileBlob: Blob = fileToUpload.originFileObj;
     const totalChunks = Math.ceil(fileBlob.size / CHUNK_SIZE);
+    // console.log(fileBlob.size + "   +++   " + CHUNK_SIZE)
     const fileChunksMap: Map<string, Blob> = new Map();
     const fileName: string = fileToUpload.name
     let nonFileData: { [key: string]: any } = {};
@@ -79,7 +83,7 @@ const AddInstructionVideoPage: React.FC = () => {
       const end = Math.min(start + CHUNK_SIZE, fileBlob.size);
       fileChunksMap.set(`${fileToUpload.name}-${i + 1}`, fileBlob.slice(start, end));
     }
-
+    // console.log(fileChunksMap)
     for (let key in values) {
       console.log(key)
       nonFileData[key] = values[key];
@@ -96,6 +100,7 @@ const AddInstructionVideoPage: React.FC = () => {
     // for (const [key, value] of entries) {
     //   console.log(`${key}: ${value}`);
     // }
+
     await createNewFile(formData)
       .unwrap()
       .then((payload) => {
@@ -117,6 +122,7 @@ const AddInstructionVideoPage: React.FC = () => {
   return <>
     <Form
       name="instructionVideoUpload"
+      form={form}
       onFinish={onFinish}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
@@ -126,7 +132,7 @@ const AddInstructionVideoPage: React.FC = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item name="fileDescription" label="File Description">
+      <Form.Item name="fileDesc" label="File Description">
         <Input />
       </Form.Item>
 

@@ -53,3 +53,8 @@ body,
 .ant-layout {
   height: 100%;
 }
+
+.ant-page-header {
+  border-radius: 0 !important;
+  /* Remove rounded corners */
+}

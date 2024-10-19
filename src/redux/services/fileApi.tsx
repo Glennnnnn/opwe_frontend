@@ -14,6 +14,15 @@ export const fileApi = createApi({
           body: formData
         }
       }
+    }),
+    queryFileById: builder.query<any, string>({
+      query: (fileId: string) => ({
+        url: `/fileService/newFile?fileId=${fileId}`,
+        method: `get`,
+      }),
+      transformResponse: (responseData: { data: any }) => {
+        return responseData.data
+      },
     })
   })
 })

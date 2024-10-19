@@ -2,7 +2,7 @@
 // import logo from './logo.svg';
 import { Link, Route, Routes } from 'react-router-dom';
 import React, { useState } from 'react';
-import {
+import Icon, {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
@@ -10,9 +10,10 @@ import {
   VideoCameraOutlined,
   ShoppingOutlined
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import { Button, Layout, Menu, theme, ConfigProvider } from 'antd';
 import type { MenuProps } from 'antd';
 import './App.css';
+
 import HomePage from './pages/HomePage';
 import BlogPage from './pages/BlogPage';
 import LoginPage from './pages/LoginPage';
@@ -21,12 +22,13 @@ import BlogListPage from './pages/BlogListPage';
 import AddProductPage from './pages/ProductPage/addProductPage';
 import ProductListPage from './pages/ProductPage/index';
 import ProductDetailPage from './pages/ProductPage/productDetailPage';
-import InstructionListPage from './pages/InstructionPage/index'
-import AddInstructionVideoPage from './pages/InstructionPage/addInstructionVideoPage'
+import InstructionListPage from './pages/InstructionPage/index';
+import AddInstructionVideoPage from './pages/InstructionPage/addInstructionVideoPage';
 
+import logo from '@/assets/opweLogo.png'
 
 const layoutStyle = {
-  borderRadius: 8,
+  borderRadius: 0,
   overflow: 'hidden',
   width: 'calc(100% - 8px)',
   maxWidth: 'calc(100% - 8px)',
@@ -39,45 +41,51 @@ const App: React.FC = () => {
   } = theme.useToken();
   const { Header, Sider, Content } = Layout;
   return (
-    <div className="App">
-      <Layout style={layoutStyle}>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className="demo-logo-vertical" />
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            items={[
-              {
-                key: '1',
-                icon: <UserOutlined />,
-                label: <Link to="/">Homepage</Link>,
-              },
-              {
-                key: '2',
-                icon: <ShoppingOutlined />,
-                label: <Link to="/productPage">Product</Link>,
-              },
-              {
-                key: '3',
-                icon: <ShoppingOutlined />,
-                label: <Link to="/introductionPage">Introduction</Link>,
-              },
-            ]}
-          />
-        </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
+    <ConfigProvider
+      theme={{
+        token: {
+          // Seed Token
+          // colorPrimary: '#00b96b',
+          borderRadius: 0,
+          // Alias Token
+          colorBgContainer: 'white',
+        },
+      }}
+    >
+      <div className="App">
+        <Layout style={layoutStyle}>
+          <Header style={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            padding: '20px'
+          }}>
+            <img src={logo} alt="Logo" style={{ height: '40px', marginRight: '8px' }} />
+            <Menu
+              theme="light"
+              mode="horizontal"
+              defaultSelectedKeys={['1']}
               style={{
-                fontSize: '16px',
-                width: 64,
-                height: 64,
-                marginLeft: 16
+                flex: 1,
+                minWidth: 0,
               }}
+              items={[
+                {
+                  key: '1',
+                  icon: <UserOutlined />,
+                  label: <Link to="/">Homepage</Link>,
+                },
+                {
+                  key: '2',
+                  icon: <ShoppingOutlined />,
+                  label: <Link to="/productPage">Product</Link>,
+                },
+                {
+                  key: '3',
+                  icon: <ShoppingOutlined />,
+                  label: <Link to="/introductionPage">Introduction</Link>,
+                },
+              ]}
             />
           </Header>
           <Content
@@ -102,9 +110,10 @@ const App: React.FC = () => {
               <Route path="/introductionPage/addInstructionVideoPage" element={<AddInstructionVideoPage />} />
             </Routes>
           </Content>
+
         </Layout>
-      </Layout>
-    </div >
+      </div >
+    </ConfigProvider>
   );
 }
 
