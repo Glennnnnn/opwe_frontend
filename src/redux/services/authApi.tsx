@@ -19,7 +19,7 @@ interface LoginResponse {
 }
 
 export const authApi = createApi({
-  reducerPath: 'auth',
+  reducerPath: 'authApi',
   baseQuery: axiosPostWithMultiPartQuery,
   endpoints: (builder) => ({
     userLogin: builder.mutation<LoginResponse, Credentials>({
