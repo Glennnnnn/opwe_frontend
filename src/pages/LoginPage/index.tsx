@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Form, Input, Button, Checkbox } from 'antd'
+import { Card, Form, Input, Button, Checkbox, message } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import logo from '@/assets/newLogo.png'
+import logo from '@/assets/opweLogo.png'
 import './index.scss'
 import { useIvt } from '@/store'
 import { useLocation, NavLink, useNavigate } from 'react-router-dom';
-
+import { useUserLoginMutation } from '@/redux/services/authApi'
 interface LoginFormValues {
   username: string;
   password: string;
+}
+
+interface Credentials {
+  userName: string;
+  userPassword: string;
 }
 
 function Loginpage() {
@@ -18,14 +23,49 @@ function Loginpage() {
   const [clientReady, setClientReady] = useState(false);
   const location = useLocation()
   const navigate = useNavigate()
+  const [messageApi, contextHolder] = message.useMessage();
+
+
   useEffect(() => {
     setClientReady(true);
   }, []);
-
-  const onFinish = async (values: LoginFormValues) => {
-    const { username, password } = values
+  const [userLogin] = useUserLoginMutation();
+  const onFinish = async (values: Credentials) => {
+    // const { username, password } = values
     // console.log(getQueryString("target"))
-    const res = await loginIvt.login({ username, password })
+    try {
+      const loginResult = await userLogin(values)
+        .unwrap()
+        .then((payLoad) => {
+          // console.log(payLoad)
+          if (payLoad.code == 200) {
+            messageApi.open({
+              type: 'success',
+              content: 'Login success!',
+              duration: 1
+            });
+            setTimeout(() => {
+              navigate("/")
+            }, 1000);
+
+          } else {
+            messageApi.open({
+              type: 'error',
+              content: 'Login failed!',
+              duration: 3
+            });
+          }
+
+        })
+    } catch (error) {
+      setTimeout(() => {
+        messageApi.open({
+          type: 'error',
+          content: 'Login failed!',
+        });
+      }, 3000);
+    }
+
   }
   function getQueryString(queryName: String) {
     var reg = new RegExp('(^|&)' + queryName + '=([^&]*)(&|$)', 'i')
@@ -35,11 +75,12 @@ function Loginpage() {
     if (r != null) {
       return unescape(r[2])
     }
-
     return null
   }
+
   return (
     <div className="login">
+      {contextHolder}
       <video autoPlay loop muted>
         <source src="https://gw.alipayobjects.com/v/huamei_gcee1x/afts/video/jXRBRK_VAwoAAAAAAAAAAAAAK4eUAQBr" />
       </video>
@@ -51,7 +92,7 @@ function Loginpage() {
         </div>
         <Form name="login-form" className="login-form" onFinish={onFinish}>
           <Form.Item
-            name="username"
+            name="userName"
             rules={[
               {
                 required: true,
@@ -61,7 +102,7 @@ function Loginpage() {
             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
           </Form.Item>
           <Form.Item
-            name="password"
+            name="userPassword"
             rules={[
               {
                 required: true,

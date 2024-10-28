@@ -5,7 +5,7 @@ import JSONbig from 'json-bigint'
 import BigNumber from 'bignumber.js';
 import { Result } from "antd";
 
-export const baseURL = "http://localhost:8081"
+export const baseURL = "http://localhost:8090"
 
 export const baseQuery = fetchBaseQuery({ baseUrl: baseURL });
 
@@ -65,6 +65,7 @@ export const fetchBaseQueryByAxios = fetchBaseQuery({
 
 export const axiosPostWithMultiPartQuery = fetchBaseQuery({
   baseUrl: baseURL,
+  credentials: "include",
   // headers: {
   //   'Content-Type': 'multipart/form-data',
   // },

@@ -1,43 +1,71 @@
-import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { axiosPostWithMultiPartQuery } from "../api/fetchBaseQueryHelper";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { axiosPostWithMultiPartQuery, fetchBaseQueryByAxios } from "../api/fetchBaseQueryHelper";
 import { setAuth, setError } from "../slices/authSlice";
 
 
 interface Credentials {
-  email: string;
-  password: string;
+  userName: string;
+  userPassword: string;
+}
+
+interface User {
+  userId: string;
+  userEmail: string;
+  userPhone: string;
+  userRoleName: string;
+  // Add any other user fields here
 }
 
 interface LoginResponse {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    // Add any other user fields expect from the response
-  };
-  token: string; // Token returned from login
+  code: number
+  msg: string
+  data: {
+    loginUserResDto: User
+    token: string; // Token returned from login
+  }
+}
+
+export interface AuthState {
+  user: User
+  token: string | null
+  error: string | null
+  isSuccess: boolean,
+  isLoading: boolean,
 }
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: axiosPostWithMultiPartQuery,
+  baseQuery: fetchBaseQueryByAxios,
   endpoints: (builder) => ({
     userLogin: builder.mutation<LoginResponse, Credentials>({
       query: (credentials) => ({
-        url: 'auth/login',
+        url: 'authService/login',
         method: 'POST',
         body: credentials
       }),
-      transformResponse: (responseData: { data: any }) => {
-        return responseData.data
+      transformResponse: (responseData: LoginResponse) => {
+        return responseData
       },
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          // Dispatch an action to set the user state in your auth slice
-          dispatch(setAuth(data.user)); // Assuming setUser is an action from your auth slice
+          const responseData = await queryFulfilled;
+          if (responseData.data.code == 200) {
+            const authState: AuthState = {
+              user: responseData.data.data.loginUserResDto,
+              token: responseData.data.data.token,
+              error: null,
+              isSuccess: true,
+              isLoading: false,
+            }
+            dispatch(setAuth(authState));
+            localStorage.setItem('token', responseData.data.data.token);
+          } else {
+            dispatch(setError(responseData.data.msg))
+          }
+          // Dispatch an action to set the user state in your auth slice // Assuming setUser is an action from your auth slice
           // Optionally store the token in localStorage or cookies
-          localStorage.setItem('token', data.token);
+
+
         } catch (error) {
           dispatch(setError(error as string))
           console.error('Login failed', error);
@@ -47,3 +75,5 @@ export const authApi = createApi({
 
   })
 })
+
+export const { useUserLoginMutation } = authApi
