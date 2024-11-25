@@ -58,3 +58,9 @@ body,
   border-radius: 0 !important;
   /* Remove rounded corners */
 }
+
+.custom-background {
+  background-color: #f5f5f5;
+  /* Adjust the color if needed */
+  min-height: 100vh;
+}

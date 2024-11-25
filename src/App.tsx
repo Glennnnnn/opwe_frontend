@@ -1,7 +1,9 @@
 // import React from 'react';
 // import logo from './logo.svg';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, Navigate } from 'react-router-dom';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/store';
 import Icon, {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -24,7 +26,7 @@ import ProductListPage from './pages/ProductPage/index';
 import ProductDetailPage from './pages/ProductPage/productDetailPage';
 import InstructionListPage from './pages/InstructionPage/index';
 import AddInstructionVideoPage from './pages/InstructionPage/addInstructionVideoPage';
-
+import Profile from './pages/TestPage/Profile';
 import logo from '@/assets/opweLogo.png'
 
 const layoutStyle = {
@@ -40,6 +42,8 @@ const App: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const { Header, Sider, Content } = Layout;
+  const token = useSelector((state: RootState) => state.auth.token)
+
   return (
     <ConfigProvider
       theme={{
@@ -52,6 +56,7 @@ const App: React.FC = () => {
         },
       }}
     >
+      {/* <p>{token}</p> */}
       <div className="App">
         <Layout style={layoutStyle}>
           <Header style={{
@@ -91,13 +96,26 @@ const App: React.FC = () => {
           <Content
             style={{
               margin: '8px 8px',
-              padding: 24,
+              padding: 0,
               minHeight: 280,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
+              backgroundColor: '#f5f5f5'
             }}
           >
             <Routes>
+              <Route path="/" element={token ? <HomePage /> : <Navigate to="/loginPage" />} />
+              <Route path="/blogPage" element={token ? <BlogPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/loginPage" element={<LoginPage />} />
+              <Route path="/consentPage" element={token ? <ConsentPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/consentListPage" element={token ? <BlogListPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/productPage" element={token ? <ProductListPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/addProductPage" element={token ? <AddProductPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/productDetailPage/:productId" element={token ? <ProductDetailPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/introductionPage" element={token ? <InstructionListPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/introductionPage/addInstructionVideoPage" element={token ? <AddInstructionVideoPage /> : <Navigate to="/loginPage" />} />
+              <Route path="/testPage" element={<Profile />} />
+              {/* 
               <Route path="/" element={<HomePage />} />
               <Route path="/blogPage" element={<BlogPage />} />
               <Route path="/loginPage" element={<LoginPage />} />
@@ -107,7 +125,7 @@ const App: React.FC = () => {
               <Route path="/addProductPage" element={<AddProductPage />} />
               <Route path="/productDetailPage/:productId" element={<ProductDetailPage />} />
               <Route path="/introductionPage" element={<InstructionListPage />} />
-              <Route path="/introductionPage/addInstructionVideoPage" element={<AddInstructionVideoPage />} />
+              <Route path="/introductionPage/addInstructionVideoPage" element={<AddInstructionVideoPage />} /> */}
             </Routes>
           </Content>
 

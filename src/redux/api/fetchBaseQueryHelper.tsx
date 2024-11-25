@@ -3,7 +3,7 @@ import { FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import JSONbig from 'json-bigint'
 import BigNumber from 'bignumber.js';
-import { Result } from "antd";
+import { RootState } from "../store";
 
 export const baseURL = "http://localhost:8090"
 
@@ -56,19 +56,37 @@ export const axiosBasePostQuery = async ({ url, data }: { url: string; data: any
 
 export const fetchBaseQueryByAxios = fetchBaseQuery({
   baseUrl: baseURL,
+  prepareHeaders(headers, { getState }) {
+    const token = (getState() as RootState).auth.token;
+
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  },
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
   }
 });
 
-
 export const axiosPostWithMultiPartQuery = fetchBaseQuery({
   baseUrl: baseURL,
   credentials: "include",
+  prepareHeaders(headers, { getState }) {
+    const token = (getState() as RootState).auth.token;
+
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  },
   // headers: {
-  //   'Content-Type': 'multipart/form-data',
-  // },
+  //   Accept: "application/json",
+  //   "Content-Type": "application/json",
+  // }
 });
 
 export const fetchBaseQueryByAxiosFormData = fetchBaseQuery({

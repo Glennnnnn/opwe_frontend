@@ -23,7 +23,7 @@ const ProductDetailPage: React.FC = () => {
       console.log(data.data.productImage)
       setProductData(data.data);
     }
-  }, [productData]);
+  }, [productData, isLoading]);
 
   const handleAddProductButtonClick = () => {
     navigate('/addProductPage'); // Replace with your actual route path

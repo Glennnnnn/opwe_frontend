@@ -146,9 +146,9 @@ const ProductListPage: React.FC = () => {
     },
     {
       title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-      render: (price: number) => `$${price}`, // Optional formatting
+      dataIndex: 'productPrice',
+      key: 'productPrice',
+      render: (price: number) => `${price}`, // Optional formatting
     },
   ];
   // Add more columns as needed
