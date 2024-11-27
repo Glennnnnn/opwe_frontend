@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Card } from 'antd';
+import { Table, Button, Card, Pagination, Spin, Row, Col } from 'antd';
 import type { GetProp, TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import type { SorterResult } from 'antd/es/table/interface';
@@ -71,7 +71,14 @@ const ProductListPage: React.FC = () => {
   const [productList, setProductList] = useState<Product[]>([])
   const [productCategoryList, setProductCategoryList] = useState<ProductCategory[]>([])
 
-
+  const handlePaginationChange = (page: number, pageSize?: number) => {
+    setTableParams((prev) => ({
+      pagination: {
+        current: page,
+        pageSize: pageSize || prev.pagination?.pageSize,
+      },
+    }));
+  };
 
   useEffect(() => {
     console.log("useEffect called", productListDataLoading)
@@ -99,12 +106,6 @@ const ProductListPage: React.FC = () => {
   }, [
     baseProductListData,
     productListDataLoading,
-    // productCategoryListDataLoading,
-    // tableParams.pagination?.current,
-    // tableParams.pagination?.pageSize,
-    // tableParams?.sortOrder,
-    // tableParams?.sortField,
-    // JSON.stringify(tableParams.filters),
   ]);
 
 
@@ -152,33 +153,78 @@ const ProductListPage: React.FC = () => {
     },
   ];
   // Add more columns as needed
-  return <>
-    <Card
-      style={{
-        height: '8%',
-        padding: '2px 2px',
-        display: 'flex',            // Flexbox for alignment
-        alignItems: 'center',       // Center vertically
-        justifyContent: 'flex-end'
-      }}>
-      <Button type="primary" onClick={handleAddProductButtonClick} icon={<PlusOutlined />}>
-        Create New product
-      </Button>
-      <Button type="primary" onClick={handleProductDetailPageClick} style={{ marginLeft: '8px' }}>
-        Go to Target Page
-      </Button>
-    </Card>
-    <div className="table-container">
-      <Table
-        // style={{ height: '90%' }}
-        dataSource={productList}
-        columns={columns}
-        onChange={handleTableChange}
-        pagination={tableParams.pagination}
-      />
-    </div>
-  </>
+  // return <>
+  //   <Card
+  //     style={{
+  //       height: '8%',
+  //       padding: '2px 2px',
+  //       display: 'flex',            // Flexbox for alignment
+  //       alignItems: 'center',       // Center vertically
+  //       justifyContent: 'flex-end'
+  //     }}>
+  //     <Button type="primary" onClick={handleAddProductButtonClick} icon={<PlusOutlined />}>
+  //       Create New product
+  //     </Button>
+  //     <Button type="primary" onClick={handleProductDetailPageClick} style={{ marginLeft: '8px' }}>
+  //       Go to Target Page
+  //     </Button>
+  //   </Card>
+  //   <div className="table-container">
+  //     <Table
+  //       // style={{ height: '90%' }}
+  //       dataSource={productList}
+  //       columns={columns}
+  //       onChange={handleTableChange}
+  //       pagination={tableParams.pagination}
+  //     />
+  //   </div>
+  // </>
 
+  return (
+    <div style={{ padding: '20px' }}>
+      <Card
+        style={{
+          height: '8%',
+          padding: '2px 2px',
+          display: 'flex',            // Flexbox for alignment
+          alignItems: 'center',       // Center vertically
+          justifyContent: 'flex-end'
+        }}>
+        <Button type="primary" onClick={handleAddProductButtonClick} icon={<PlusOutlined />}>
+          Create New product
+        </Button>
+        <Button type="primary" onClick={handleProductDetailPageClick} style={{ marginLeft: '8px' }}>
+          Go to Target Page
+        </Button>
+      </Card>
+      {productListDataLoading ? (
+        <Spin size="large" />
+      ) : (
+        <>
+          <Row gutter={[16, 16]}>
+            {productList.map((product) => (
+              <Col span={6} key={product.productId}>
+                <Card
+                  hoverable
+                  cover={<img alt={product.productName} src={product.productImage} />}
+                  onClick={() => navigate(`/productDetailPage/${product.productId}`)}
+                >
+                  <Card.Meta title={product.productName} description={`$${product.productPrice}`} />
+                </Card>
+              </Col>
+            ))}
+          </Row>
+          <Pagination
+            current={tableParams.pagination?.current}
+            total={tableParams.pagination?.total}
+            pageSize={20}
+            onChange={handlePaginationChange}
+            style={{ marginTop: '20px', textAlign: 'center' }}
+          />
+        </>
+      )}
+    </div>
+  );
 }
 
 export default ProductListPage;

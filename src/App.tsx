@@ -26,7 +26,7 @@ import ProductListPage from './pages/ProductPage/index';
 import ProductDetailPage from './pages/ProductPage/productDetailPage';
 import InstructionListPage from './pages/InstructionPage/index';
 import AddInstructionVideoPage from './pages/InstructionPage/addInstructionVideoPage';
-import Profile from './pages/TestPage/Profile';
+import Profile from './pages/TestPage/profile';
 import logo from '@/assets/opweLogo.png'
 
 const layoutStyle = {

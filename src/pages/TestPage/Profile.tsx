@@ -35,6 +35,10 @@ import {
   UserOutlined
 } from "@ant-design/icons";
 
+import "./profile.scss"
+
+import facialImg from "@/assets/images/facialImg.jpg"
+
 import bgProfile from "@/assets/images/bg-profile.jpg";
 import profilavatar from "@/assets/images/face-1.jpg";
 import convesionImg from "@/assets/images/face-3.jpg";
@@ -168,70 +172,33 @@ function Profile() {
         className="profile-nav-bg"
         style={{ backgroundImage: "url(" + bgProfile + ")" }}
       ></div> */}
-      <div style={{
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f0f2f5',
-      }}>
-        <div style={{
-          backgroundImage: "url(" + bgProfile + ")", // Replace with your background image URL
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          height: '200px',
-          width: '100%',
-          borderBottomLeftRadius: '20px',
-          borderBottomRightRadius: '20px',
-          position: 'absolute',
-          top: 0,
-          zIndex: 0,
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: '0px',
-            left: '20px',
-            color: 'white',
-            zIndex: 1,
-          }}>
-            {/* <Text strong style={{ fontSize: '18px' }}>Pages / Profile</Text>
-          <Title level={2} style={{ color: 'white', margin: 0 }}>Profile</Title> */}
-          </div>
+      <div className="profile-container">
+        <div className="background-image">
         </div>
-        <Card
-          style={{
-            maxWidth: '1200px',
-            width: '100%',
-            height: '180px',
-            borderRadius: '10px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            marginTop: '100px', // Pull the card upwards to overlap with the background
-            zIndex: 1, // Ensure the card appears above the background
-            marginBottom: '10px'
-          }}
-          bodyStyle={{ padding: '24px' }}
-        >
-          {/* Profile Info */}
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Avatar size={80} icon={<UserOutlined />} src={profilavatar} />
-            <div style={{ marginLeft: '16px' }}>
-              <Title level={3} style={{ marginBottom: 0 }}>Sarah Jacob</Title>
-              <Text type="secondary">CEO / Co-Founder</Text>
+        <Card className="profile-card">
+          <div className="profile-card-body">
+            {/* Profile Info */}
+            <div className=".profile-info">
+              <Avatar size={80} icon={<UserOutlined />} src={facialImg} />
+              <div className="profile-info-text">
+                <Title level={3} className="profile-info-title">Jialin Liu</Title>
+                <Text type="secondary">Backend / Full-stack developer</Text>
+              </div>
             </div>
-          </div>
 
-          {/* Tabs */}
-          <Tabs defaultActiveKey="1" style={{ marginTop: '16px' }}>
-            <Tabs.TabPane tab="OVERVIEW" key="1">
-              {/* Overview content here */}
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="TEAMS" key="2">
-              {/* Teams content here */}
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="PROJECTS" key="3">
-              {/* Projects content here */}
-            </Tabs.TabPane>
-          </Tabs>
+            {/* Tabs */}
+            <Tabs defaultActiveKey="1" className="profile-tabs">
+              <Tabs.TabPane tab="OVERVIEW" key="1">
+                {/* Overview content here */}
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="TEAMS" key="2">
+                {/* Teams content here */}
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="PROJECTS" key="3">
+                {/* Projects content here */}
+              </Tabs.TabPane>
+            </Tabs>
+          </div>
         </Card>
       </div>
       <Row gutter={[24, 0]}>
