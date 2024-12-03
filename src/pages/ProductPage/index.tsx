@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Card, Pagination, Spin, Row, Col } from 'antd';
+import {
+  Table,
+  Button,
+  Card,
+  Pagination,
+  Spin,
+  Row,
+  Col,
+  Input,
+  Select,
+  Switch,
+} from 'antd';
+
 import type { GetProp, TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import type { SorterResult } from 'antd/es/table/interface';
@@ -15,6 +27,8 @@ import './index.scss';
 
 type ColumnsType<T extends object = object> = TableProps<T>['columns'];
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
+
+const { Option } = Select;
 
 interface Product {
   productId: string;
@@ -181,7 +195,7 @@ const ProductListPage: React.FC = () => {
   // </>
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: "20px" }}>
       <Card
         style={{
           height: '8%',
@@ -197,32 +211,94 @@ const ProductListPage: React.FC = () => {
           Go to Target Page
         </Button>
       </Card>
-      {productListDataLoading ? (
-        <Spin size="large" />
-      ) : (
-        <>
-          <Row gutter={[16, 16]}>
-            {productList.map((product) => (
-              <Col span={6} key={product.productId}>
-                <Card
-                  hoverable
-                  cover={<img alt={product.productName} src={product.productImage} />}
-                  onClick={() => navigate(`/productDetailPage/${product.productId}`)}
-                >
-                  <Card.Meta title={product.productName} description={`$${product.productPrice}`} />
-                </Card>
-              </Col>
-            ))}
-          </Row>
-          <Pagination
-            current={tableParams.pagination?.current}
-            total={tableParams.pagination?.total}
-            pageSize={20}
-            onChange={handlePaginationChange}
-            style={{ marginTop: '20px', textAlign: 'center' }}
-          />
-        </>
-      )}
+      <div style={{
+        maxWidth: '1500px',
+        margin: '0 auto',
+        width: '100%'
+      }}>
+        <Row gutter={[16, 16]} style={{ margin: "20px 10%" }}>
+
+          <Col span={6}>
+            <Card title="Filters" style={{ height: "100%" }}>
+              <Input
+                placeholder="Search by name"
+                onChange={() => console.log("a")}
+                style={{ marginBottom: "10px" }}
+              />
+              <Select
+                mode="multiple"
+                allowClear
+                placeholder="Select categories"
+                style={{ width: "100%", marginBottom: "10px" }}
+                onChange={() => console.log("a")}
+              >
+                <Option value="electronics">Electronics</Option>
+                <Option value="fashion">Fashion</Option>
+                {/* Add more options */}
+              </Select>
+              <Switch
+                checked={true}
+                onChange={() => console.log("a")}
+                checkedChildren="Available"
+                unCheckedChildren="All"
+                style={{ marginBottom: "10px" }}
+              />
+            </Card>
+          </Col>
+
+          <Col span={18} style={{ padding: '0px 20px' }}>
+            <div
+              style={{
+                maxHeight: 'calc(100vh - 240px)', // Adjust height as needed
+                overflowY: 'auto',
+                marginTop: '20px', // Space between button card and image cards
+                paddingRight: '10px',
+                // marginLeft: '20px',
+                // marginRight: '20px' // Prevent scrollbar overlap
+              }}
+            >
+              {productListDataLoading ? (
+                <Spin size="large" />
+              ) : (
+                <>
+                  <Row gutter={[12, 12]}>
+                    {productList.map((product) => (
+                      <Col span={6} key={product.productId}>
+                        <Card
+                          style={{
+                            width: "200px", // Fixed width (relative to column span)
+                            height: "300px", // Fixed height
+                          }}
+                          hoverable
+                          cover={<img
+                            alt={product.productName}
+                            src={product.productImage}
+                            style={{
+                              height: "200px",
+                              width: '200px',
+                              objectFit: "cover",
+                            }}
+                          />}
+                          onClick={() => navigate(`/productDetailPage/${product.productId}`)}
+                        >
+                          <Card.Meta title={product.productName} description={"price: " + `$${product.productPrice}`} />
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
+                  <Pagination
+                    current={tableParams.pagination?.current}
+                    total={tableParams.pagination?.total}
+                    pageSize={20}
+                    onChange={handlePaginationChange}
+                    style={{ marginTop: '20px', textAlign: 'center' }}
+                  />
+                </>
+              )}
+            </div>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }

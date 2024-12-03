@@ -16,30 +16,26 @@ import {
   Col,
   Card,
   Button,
-  List,
   Descriptions,
   Avatar,
-  Radio,
-  Switch,
   Upload,
   message,
   Typography,
-  Tabs
+  Tabs,
+  Tag
 } from "antd";
 
 import {
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
   VerticalAlignTopOutlined,
-  UserOutlined
+  UserOutlined,
+  LinkedinOutlined,
+  GithubOutlined
 } from "@ant-design/icons";
 
 import "./profile.scss"
 
 import facialImg from "@/assets/images/facialImg.jpg"
 
-import bgProfile from "@/assets/images/bg-profile.jpg";
 import profilavatar from "@/assets/images/face-1.jpg";
 import convesionImg from "@/assets/images/face-3.jpg";
 import convesionImg2 from "@/assets/images/face-4.jpg";
@@ -201,87 +197,113 @@ function Profile() {
           </div>
         </Card>
       </div>
-      <Row gutter={[24, 0]}>
+      <Row gutter={[24, 0]} style={{
+        margin: "0px 200px"
+      }}>
         <Col span={24} md={8} className="mb-24 ">
           <Card
             bordered={false}
-            className="header-solid h-full"
-            title={<h6 className="font-semibold m-0">Platform Settings</h6>}
-          >
-            <ul className="list settings-list">
-              <li>
-                <h6 className="list-header text-sm text-muted">ACCOUNT</h6>
-              </li>
-              <li>
-                <Switch defaultChecked />
-
-                <span>Email me when someone follows me</span>
-              </li>
-              <li>
-                <Switch />
-                <span>Email me when someone answers me</span>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>Email me when someone mentions me</span>
-              </li>
-              <li>
-                <h6 className="list-header text-sm text-muted m-0">
-                  APPLICATION
-                </h6>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>New launches and projects</span>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>Monthly product updates</span>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>Subscribe to newsletter</span>
-              </li>
-            </ul>
-          </Card>
-        </Col>
-        <Col span={24} md={8} className="mb-24">
-          <Card
-            bordered={false}
-            title={<h6 className="font-semibold m-0">Profile Information</h6>}
+            title={<p className="font-semibold m-0">Skills & Abilities</p>}
             className="header-solid h-full card-profile-information"
             bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
           >
             <p className="text-dark">
               {" "}
-              Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer
-              is no. If two equally difficult paths, choose the one more painful
-              in the short term (pain avoidance is creating an illusion of
-              equality).{" "}
+              Programming language:
+              <Tag bordered={false} color="red">
+                Java
+              </Tag>
+              <Tag bordered={false} color="volcano">
+                Javascript/Typescript
+              </Tag>
+              <Tag bordered={false} color="orange">
+                Python
+              </Tag>
+              <Tag bordered={false} color="geekblue">
+                C#
+              </Tag> <br />
+              Databases: <Tag bordered={false} color="blue">
+                MySQL
+              </Tag>
+              <Tag bordered={false} color="cyan">
+                PostgreSQL
+              </Tag>
+              <Tag bordered={false} color="green">
+                Redis
+              </Tag><br />
+              Backend Technologies:
+              <Tag bordered={false} color="purple">
+                Springboot
+              </Tag>
+              <Tag bordered={false} color="magenta">
+                SpringCloud
+              </Tag>
+              <Tag bordered={false} color="gold">
+                .Net
+              </Tag>
+              <Tag bordered={false} color="lime">
+                Fastapi
+              </Tag><br />
+              Frontend Technologies: <Tag bordered={false} color="gold">
+                React
+              </Tag>
+              <Tag bordered={false} color="lime">
+                Redux
+              </Tag><br />
+              Message-oriented middleware: <Tag bordered={false} color="gold">
+                .Rabbitmq
+              </Tag>
+              <Tag bordered={false} color="lime">
+                Rocketmq
+              </Tag><br />
+              Tools: <Tag bordered={false} color="purple">
+                Jenkins
+              </Tag>
+              <Tag bordered={false} color="magenta">
+                Docker
+              </Tag>
+              <Tag bordered={false} color="gold">
+                AWS
+              </Tag>
+              <Tag bordered={false} color="lime">
+                Nginx
+              </Tag><br />
+              {" "}
+            </p>
+
+          </Card>
+        </Col>
+        <Col span={24} md={8} className="mb-24" >
+          <Card
+            bordered={false}
+            title={<p className="font-semibold m-0">Profile Information</p>}
+            className="header-solid h-full card-profile-information"
+            bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
+          >
+            <p className="text-dark">
+              {" "}
+              Passionate software developer with 4
+              years of experience in designing, developing, and maintaining robust applications.
+              Specializing in Spring, React. Worked on a wide range of projects,
+              from building scalable backend systems to developing user-friendly front-end interfaces.{" "}
             </p>
             <hr className="my-25" />
-            <Descriptions title="Oliver Liam">
-              <Descriptions.Item label="Full Name" span={3}>
-                Sarah Emily Jacob
-              </Descriptions.Item>
+            <Descriptions title="Contact Information">
               <Descriptions.Item label="Mobile" span={3}>
-                (44) 123 1234 123
+                (61) 426364586
               </Descriptions.Item>
               <Descriptions.Item label="Email" span={3}>
-                sarahjacob@mail.com
+                ljlsjcnh649692327@gmail.com
               </Descriptions.Item>
               <Descriptions.Item label="Location" span={3}>
-                USA
+                Melbourne, Victoria
               </Descriptions.Item>
               <Descriptions.Item label="Social" span={3}>
-                <a href="#pablo" className="mx-5 px-5">
-                  {<TwitterOutlined />}
+                <a href="https://www.linkedin.com/in/jialin-liu-ab3585126/" className="mx-5 px-5">
+                  {<LinkedinOutlined />}
                 </a>
-                <a href="#pablo" className="mx-5 px-5">
-                  {<FacebookOutlined style={{ color: "#344e86" }} />}
-                </a>
-                <a href="#pablo" className="mx-5 px-5">
-                  {<InstagramOutlined style={{ color: "#e1306c" }} />}
+                <a href="https://github.com/Glennnnnn" className="mx-5 px-5">
+                  {<GithubOutlined style={{ color: "#344e86" }} />}
                 </a>
               </Descriptions.Item>
             </Descriptions>
@@ -290,27 +312,34 @@ function Profile() {
         <Col span={24} md={8} className="mb-24">
           <Card
             bordered={false}
-            title={<h6 className="font-semibold m-0">Conversations</h6>}
-            className="header-solid h-full"
+            title={<p className="font-semibold m-0">Work Experience</p>}
+            className="header-solid h-full card-profile-information"
             bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
           >
-            <List
-              itemLayout="horizontal"
-              dataSource={data}
-              split={false}
-              className="conversations-list"
-              renderItem={(item) => (
-                <List.Item actions={[<Button type="link">REPLY</Button>]}>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar shape="square" size={48} src={item.avatar} />
-                    }
-                    title={item.title}
-                    description={item.description}
-                  />
-                </List.Item>
-              )}
-            />
+            <p className="text-dark">
+              <strong>
+                {" "}
+                2020.08 - 2023.08
+                Postal Savings Bank of China <br />
+                Backend Developer, Technical Manager.{" "}
+              </strong>
+            </p>
+            Enterprise Messaging Architecture (EDA) Project.<br />
+            Wealth Management Middle Platform Project.<br />
+            Personal Wealth Management Project.
+            <hr className="my-25" />
+            <p className="text-dark">
+              <strong>
+                {" "}
+                2023.08 - Current
+                Freelance Developer <br />
+                Full-Stack developer.{" "}
+              </strong>
+            </p>
+            Pioneer Aluminium Inventory Management System.<br />
+            AK Travel Backend Management System.<br />
+            WeGroupCarPool Management System.
+
           </Card>
         </Col>
       </Row>
@@ -323,6 +352,9 @@ function Profile() {
             <p>Architects design houses</p>
           </>
         }
+        style={{
+          margin: "0px 20px"
+        }}
       >
         <Row gutter={[24, 24]}>
           {project.map((p, index) => (
