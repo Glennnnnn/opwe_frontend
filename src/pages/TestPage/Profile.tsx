@@ -22,7 +22,8 @@ import {
   message,
   Typography,
   Tabs,
-  Tag
+  Tag,
+  Modal
 } from "antd";
 
 import {
@@ -42,13 +43,16 @@ import convesionImg2 from "@/assets/images/face-4.jpg";
 import convesionImg3 from "@/assets/images/face-5.jpeg";
 import convesionImg4 from "@/assets/images/face-6.jpeg";
 import convesionImg5 from "@/assets/images/face-2.jpg";
-import project1 from "@/assets/images/home-decor-1.jpeg";
-import project2 from "@/assets/images/home-decor-2.jpeg";
-import project3 from "@/assets/images/home-decor-3.jpeg";
+import ivtLogin from "@/assets/images/ivt_login.png";
+import ivtOrder from "@/assets/images/ivt_order.png";
+import akAllocation from "@/assets/images/ak_allocation.png";
+import akDashboard from "@/assets/images/ak_dashboard.png";
 
 function Profile() {
   const [imageURL, setImageURL] = useState<string>();
   const [, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
   const { Title, Text } = Typography;
 
@@ -68,6 +72,16 @@ function Profile() {
       message.error("Image must smaller than 2MB!");
     }
     return isJpgOrPng && isLt2M;
+  };
+
+  const showImageModal = (image: string) => {
+    setSelectedImage(image);
+    setIsModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+    setSelectedImage('');
   };
 
   const handleChange = (info: any) => {
@@ -140,21 +154,28 @@ function Profile() {
 
   const project = [
     {
-      img: project1,
-      titlesub: "Project #1",
+      img: ivtLogin,
+      titlesub: "Pioneer Aluminium Inventory Management System",
       title: "Modern",
       disciption:
         "As Uber works through a huge amount of internal management turmoil.",
     },
     {
-      img: project2,
+      img: ivtOrder,
       titlesub: "Project #2",
       title: "Scandinavian",
       disciption:
         "Music is something that every person has his or her own specific opinion about.",
     },
     {
-      img: project3,
+      img: akDashboard,
+      titlesub: "Project #3",
+      title: "Minimalist",
+      disciption:
+        "Different people have different taste, and various types of music, Zimbali Resort",
+    },
+    {
+      img: akAllocation,
       titlesub: "Project #3",
       title: "Minimalist",
       disciption:
@@ -198,14 +219,15 @@ function Profile() {
         </Card>
       </div>
       <Row gutter={[24, 0]} style={{
-        margin: "0px 200px"
+        margin: '0px 5%'
       }}>
-        <Col span={24} md={8} className="mb-24 ">
+        <Col span={8} style={{ height: '400px' }}>
           <Card
             bordered={false}
             title={<p className="font-semibold m-0">Skills & Abilities</p>}
             className="header-solid h-full card-profile-information"
             bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
+            style={{ height: '400px' }}
           >
             <p className="text-dark">
               {" "}
@@ -273,12 +295,13 @@ function Profile() {
 
           </Card>
         </Col>
-        <Col span={24} md={8} className="mb-24" >
+        <Col lg={8} style={{ height: '400px' }}>
           <Card
             bordered={false}
             title={<p className="font-semibold m-0">Profile Information</p>}
             className="header-solid h-full card-profile-information"
             bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
+            style={{ height: '400px' }}
           >
             <p className="text-dark">
               {" "}
@@ -309,12 +332,13 @@ function Profile() {
             </Descriptions>
           </Card>
         </Col>
-        <Col span={24} md={8} className="mb-24">
+        <Col lg={8} className="mb-24" style={{ height: '400px' }}>
           <Card
             bordered={false}
             title={<p className="font-semibold m-0">Work Experience</p>}
             className="header-solid h-full card-profile-information"
             bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
+            style={{ height: '400px' }}
           >
             <p className="text-dark">
               <strong>
@@ -337,7 +361,7 @@ function Profile() {
               </strong>
             </p>
             Pioneer Aluminium Inventory Management System.<br />
-            AK Travel Backend Management System.<br />
+            AK Travel Management System.<br />
             WeGroupCarPool Management System.
 
           </Card>
@@ -345,15 +369,14 @@ function Profile() {
       </Row>
       <Card
         bordered={false}
-        className="header-solid mb-24"
+        className="project-card"
         title={
           <>
-            <h6 className="font-semibold">Projects</h6>
-            <p>Architects design houses</p>
+            <p style={{ height: '25px', margin: '0px' }}>Projects</p>
           </>
         }
         style={{
-          margin: "0px 20px"
+          margin: "0px 5%"
         }}
       >
         <Row gutter={[24, 24]}>
@@ -362,47 +385,50 @@ function Profile() {
               <Card
                 bordered={false}
                 className="card-project"
-                cover={<img alt="example" src={p.img} />}
+                cover={<img
+                  alt="example"
+                  src={p.img}
+                  onClick={() => {
+                    showImageModal(p.img)
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '220px',
+                    objectFit: 'cover', /* Options: cover, contain, fill, etc. */
+                    cursor: 'pointer'
+                  }}
+                />}
               >
-                <div className="card-tag">{p.titlesub}</div>
+                <div className="card-tag"><strong>{p.titlesub}</strong></div>
                 <h5>{p.title}</h5>
                 <p>{p.disciption}</p>
                 <Row gutter={[6, 0]} className="card-footer">
                   <Col span={12}>
                     <Button type="text">VIEW PROJECT</Button>
                   </Col>
-                  <Col span={12} className="text-right">
-                    <Avatar.Group className="avatar-chips">
-                      <Avatar size="small" src={profilavatar} />
-                      <Avatar size="small" src={convesionImg} />
-                      <Avatar size="small" src={convesionImg2} />
-                      <Avatar size="small" src={convesionImg3} />
-                    </Avatar.Group>
-                  </Col>
                 </Row>
               </Card>
             </Col>
           ))}
-          <Col span={24} md={12} xl={6}>
-            <Upload
-              name="avatar"
-              listType="picture-card"
-              className="avatar-uploader projects-uploader"
-              showUploadList={false}
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              beforeUpload={beforeUpload}
-              onChange={handleChange}
-            >
-              {imageURL ? (
-                <img src={imageURL} alt="avatar" style={{ width: "100%" }} />
-              ) : (
-                uploadButton
-              )}
-            </Upload>
-          </Col>
         </Row>
       </Card>
+      <Modal
+        open={isModalVisible}
+        onCancel={handleModalClose}
+        footer={null} // Remove default footer
+        centered // Center the modal
+        width={2400} // Set custom width
+        style={{ padding: 0 }}
+      >
+        <img
+          alt="Detailed"
+          src={selectedImage}
+          style={{ width: '100%' }}
+        />
+      </Modal>
     </>
+
+
   );
 }
 

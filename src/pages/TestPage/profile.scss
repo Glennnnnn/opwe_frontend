@@ -95,3 +95,16 @@ $profile-margin-bottom: 10px;
 .profile-container .ant-typography {
   margin: 0px;
 }
+
+.project-card .ant-card-head {
+  background-color: #f0f0f0;
+  /* Custom background */
+  color: #333;
+  /* Custom text color */
+  font-size: 18px;
+  /* Custom font size */
+  padding: 0px;
+  /* Custom padding */
+  border-bottom: 2px solid #d9d9d9;
+  /* Custom border */
+}
