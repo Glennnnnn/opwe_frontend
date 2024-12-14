@@ -26,7 +26,8 @@ import ProductListPage from './pages/ProductPage/index';
 import ProductDetailPage from './pages/ProductPage/productDetailPage';
 import InstructionListPage from './pages/InstructionPage/index';
 import AddInstructionVideoPage from './pages/InstructionPage/addInstructionVideoPage';
-import Profile from './pages/TestPage/profile';
+import Profile from './pages/ProfilePage/profile';
+import ProjectDetailPage from './pages/ProfilePage/profileDetailPage';
 import logo from '@/assets/opweLogo.png'
 
 const layoutStyle = {
@@ -115,6 +116,8 @@ const App: React.FC = () => {
               <Route path="/introductionPage" element={token ? <InstructionListPage /> : <Navigate to="/loginPage" />} />
               <Route path="/introductionPage/addInstructionVideoPage" element={token ? <AddInstructionVideoPage /> : <Navigate to="/loginPage" />} />
               <Route path="/testPage" element={<Profile />} />
+              <Route path="/projectDetailPage" element={<ProjectDetailPage />} />
+
               {/* 
               <Route path="/" element={<HomePage />} />
               <Route path="/blogPage" element={<BlogPage />} />
