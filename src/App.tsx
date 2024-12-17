@@ -96,7 +96,7 @@ const App: React.FC = () => {
           </Header>
           <Content
             style={{
-              margin: '8px 8px',
+              // margin: '8px 8px',
               padding: 0,
               minHeight: 280,
               background: colorBgContainer,

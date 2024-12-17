@@ -12,6 +12,22 @@ import "./projectDetailPage.scss"
 
 import { ProjectOutlined } from '@ant-design/icons';
 
+interface articleComponent {
+  articleComponentId: string;
+  articleComponentType: 'text' | 'image'; // Define types of content
+  articleComponentContentOrUrl: string; // Adjusted to handle content types
+  ariticleComponentTitle: string | null;
+}
+
+interface AriticleData {
+  articleId: string;
+  articleTitle: string;
+  articleAuthor: string;
+  articleCreatedTime: string;
+  articleUpdatedTime: string;
+  articleComponents: articleComponent[]
+}
+
 const { Title, Text } = Typography;
 const ProjectDetailPage: React.FC = () => {
 
@@ -30,25 +46,46 @@ const ProjectDetailPage: React.FC = () => {
     setIsModalVisible(true);
   };
 
-  const blogData =
+  const ariticleData: AriticleData =
   {
-    "id": 'EDA',
-    "title": "Understanding Event-Driven Architecture",
-    "author": "Jane Doe",
-    "created_at": "2024-12-11T10:00:00Z",
-    "updated_at": "2024-12-11T12:00:00Z",
-    "contents": [
+    "articleId": 'EDA',
+    "articleTitle": "Enterprise Data Architecture (EDA) Project",
+    "articleAuthor": "JiaLin Liu(Glenn)",
+    "articleCreatedTime": "2024-12-11T22:25:00Z",
+    "articleUpdatedTime": "2024-12-11T22:25:00Z",
+    "articleComponents": [
       {
-        "type": "text",
-        "content": "Event-driven architecture (EDA) is a software design pattern..."
+        "articleComponentId": "00000001",
+        "articleComponentType": "text",
+        "articleComponentContentOrUrl":
+          "Our company already has ESB(Enterprise Service Bus) system which positioned for online transactions across systems in place and EDB(Enterprise Data Bus) system for file transfers across systems. Although both these systems provide asynchronous messaging capabilities, their messaging functions are relatively weak."
+          +
+          "Therefore, under the premise of building a new core transaction system with the fintech planning, the Enterprise Messaging Bus(EDA) is designed to handle message transmission across all bank systems. It aims to establish a highly reliable, highly available, standardized communication, well-managed, efficiently transmitted, flexibly scalable and online maintainable messaging bus.",
+        "ariticleComponentTitle": "Project Background"
       },
       {
-        "type": "image",
-        "content": EDAStructure
+        "articleComponentId": "00000002",
+        "articleComponentType": "image",
+        "articleComponentContentOrUrl": EDAStructure,
+        "ariticleComponentTitle": "Message Transmission Mechanism"
       },
       {
-        "type": "text",
-        "content": "The above diagram explains how EDA works in real-world scenarios."
+        "articleComponentId": "00000003",
+        "articleComponentType": "text",
+        "articleComponentContentOrUrl": "The overall EDA (Event-Driven Architecture) is divided into five parts: SDK, Management & Control Center, Configuration Center, Monitoring Center, and Message Service Center." +
+          "SDK: Upstream and downstream systems interact with the RocketMQ cluster through SDK dependencies. The SDK obtains the real-time cluster configuration information from the Configuration Center," +
+          "which is configured by the Management & Control Center, and caches it locally. Additionally, the SDK provides capabilities such as message re-send (based on each system’s configured retry strategy, retry count, and retry interval)," +
+          "deduplication, idempotency, etc.Management & Control Center: Provides functions for managing cluster information, topic information, upstream and downstream system subscription information, configuration change notifications," +
+          " and alarm prompts.Configuration Center: The cluster information, topic information, and upstream and downstream system subscription information configured by the Management & Control Center are stored in the Configuration Center," +
+          "where they can be accessed by the SDK.Message Service Center: Deploys the RocketMQ cluster and integrates ELK (Elasticsearch, Logstash, and Kibana) to handle message logs." +
+          "Monitoring Center: Uses Prometheus and Grafana to monitor the status of the RocketMQ cluster and push alarm status to the Management & Control Center.",
+        "ariticleComponentTitle": "EDA Project Structure"
+      },
+      {
+        "articleComponentId": "00000002",
+        "articleComponentType": "image",
+        "articleComponentContentOrUrl": EDAStructure,
+        "ariticleComponentTitle": "Project Structure"
       },
     ]
   }
@@ -59,47 +96,77 @@ const ProjectDetailPage: React.FC = () => {
       timeStyle: "short",
       timeZone: "America/New_York",
     }).format(new Date(time));
-
   }
+
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    const element = document.getElementById(targetId);
+    element?.scrollIntoView({
+      behavior: 'smooth',
+      // block: 'center', // Ensure it's visible without moving the header
+      inline: 'nearest',
+    });
+  };
   return (
     <>
       <div className="portfolio-template">
         {/* Left Column */}
-        <Row gutter={16}>
-          <Col span={16}>
+        <Row gutter={16} style={{ display: "flex", height: "95vh", width: "80%" }}>
+          <Col span={21}>
             <div className="main-project">
               <Card
-                bordered={false}
+                // bordered={false}
                 className="project-card"
+                style={{
+                  textAlign: "justify"
+                }}
               // cover={<img alt="Main Project" src={EDAStructure} />}
               >
-                <Title level={2}>{blogData.title}</Title>
-                <Text>{blogData.author}</Text>
+                <div id={"title"}>
+                  <Title level={2}>{ariticleData.articleTitle}</Title>
+                </div>
+                <Text>{ariticleData.articleAuthor}</Text>
                 <br />
-                <Text>{"Create at: " + convertTime(blogData.created_at)}</Text>
+                <Text>{"Create at: " + convertTime(ariticleData.articleCreatedTime)}</Text>
                 <hr className="my-25" />
                 <br />
-                {blogData.contents.map((block, index) => {
-                  if (block.type === "text") {
-                    return <p key={index}>{block.content}</p>;
-                  }
-                  if (block.type === "image") {
-                    return <img
-                      key={index}
-                      src={block.content}
-                      alt="Blog Content"
-                      style={{ width: "100%", cursor: 'pointer' }}
-                      onClick={() => {
-                        showImageModal(block.content)
-                      }}
-                    />;
-                  }
-                  if (block.type === "video") {
+                {ariticleData.articleComponents.map((component, index) => {
+                  if (component.articleComponentType === "text") {
                     return (
-                      <video key={index} controls style={{ width: "100%" }}>
-                        <source src={block.content} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                      <div
+                        id={component.articleComponentId}
+                        style={{ flex: '1 1 auto', overflow: 'auto' }}>
+                        <p
+                          key={index}>
+                          {component.articleComponentContentOrUrl}
+                        </p>
+                      </div>
+                    )
+                  }
+                  if (component.articleComponentType === "image") {
+                    return (
+                      <div id={component.articleComponentId}>
+                        <figure>
+                          <img
+                            key={index}
+                            src={component.articleComponentContentOrUrl}
+                            alt="Blog Content"
+                            style={{ width: "100%", cursor: 'pointer' }}
+                            onClick={() => {
+                              showImageModal(component.articleComponentContentOrUrl)
+                            }}
+                          />
+                          <figcaption>{component.ariticleComponentTitle}</figcaption>
+                        </figure>
+                      </div>)
+                  }
+                  if (component.articleComponentType === "video") {
+                    return (
+                      <div id={component.articleComponentId}>
+                        <video key={index} controls style={{ width: "100%" }}>
+                          <source src={component.articleComponentContentOrUrl} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
                     );
                   }
                   return null;
@@ -112,33 +179,34 @@ const ProjectDetailPage: React.FC = () => {
             </div>
           </Col>
           {/* Right Column */}
-          <Col span={8}>
-            <div className="other-projects">
-              <Title level={3}>Other Projects</Title>
-              <Card
-                hoverable
-                cover={<img alt="Template 1" src="template1.jpg" />}
+          <Col span={3} style={{
+            position: 'sticky', // Makes the element sticky
+            top: "10px",// Adjusts the position when it sticks
+            alignSelf: 'flex-start', // Ensures proper alignment
+          }}>
+            <div>
+              <a
+                key="title"
+                onClick={(e) => handleScroll(e, "title")}
+                style={{ display: 'block', marginBottom: 15 }}
               >
-                <Text>Material Design Web App</Text>
-              </Card>
-              <Card
-                hoverable
-                cover={<img alt="Template 2" src="template2.jpg" />}
-              >
-                <Text>Table Booking App</Text>
-              </Card>
-              <Card
-                hoverable
-                cover={<img alt="Template 3" src="template3.jpg" />}
-              >
-                <Text>Inventory App</Text>
-              </Card>
-              <Card
-                hoverable
-                cover={<img alt="Template 4" src="template4.jpg" />}
-              >
-                <Text>Quiz App</Text>
-              </Card>
+                title
+              </a>
+              {/* Custom Anchor */}
+              {ariticleData.articleComponents.map((component, index) => {
+                if (component.ariticleComponentTitle != null) {
+                  return (
+                    <a
+                      key={component.ariticleComponentTitle}
+                      onClick={(e) => handleScroll(e, component.articleComponentId)}
+                      style={{ display: 'block', marginBottom: 15 }}
+                    >
+                      {component.ariticleComponentTitle}
+                    </a>
+                  )
+                }
+              })}
+              {/* Custom Anchor */}
             </div>
           </Col>
         </Row>
