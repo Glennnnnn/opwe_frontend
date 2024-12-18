@@ -82,9 +82,24 @@ const ProjectDetailPage: React.FC = () => {
         "ariticleComponentTitle": "EDA Project Structure"
       },
       {
-        "articleComponentId": "00000002",
+        "articleComponentId": "00000005",
         "articleComponentType": "image",
         "articleComponentContentOrUrl": EDAStructure,
+        "ariticleComponentTitle": "Project Structure"
+      },
+      {
+        "articleComponentId": "00000005",
+        "articleComponentType": "text",
+        "articleComponentContentOrUrl": "<p>Phase One:</p>" +
+          "<p>Primarily responsible for the development of features related to the management control center. Key tasks included:" +
+          "Setting up the project based on Spring Boot and developing backend functionalities such as system configuration management, node configuration, topic configuration, pushing configuration data to the configuration center, receiving, and processing alarm notifications from the monitoring center." +
+          "Developed nearly 100 Restful APIs, The overall development adhered to standard software development principles and practices. Optimizing the project structure to enhance scalability." +
+          "Designed the database according to requirements and optimized multiple database indexes.</p>" +
+          "<p>Phase Two:</p>" +
+          "<p>Primarily responsible for the development of the SDK project. Key tasks included:" +
+          "Based on the original project, developed proxy functionality for integrating with C clients using Netty to address the partial lack of support for C client features in RocketMQ." +
+          "Optimized the multithreading logic of the original project, achieving an approximate 10% improvement in daily throughput." +
+          "Extended fields in the original messaging protocol to meet upstream and downstream system requirements, enhancing the ability to track message links.</p>",
         "ariticleComponentTitle": "Project Structure"
       },
     ]
@@ -134,11 +149,11 @@ const ProjectDetailPage: React.FC = () => {
                     return (
                       <div
                         id={component.articleComponentId}
-                        style={{ flex: '1 1 auto', overflow: 'auto' }}>
-                        <p
-                          key={index}>
-                          {component.articleComponentContentOrUrl}
-                        </p>
+                        style={{ flex: '1 1 auto', overflow: 'auto' }}
+                        dangerouslySetInnerHTML={{ __html: component.articleComponentContentOrUrl }}>
+                        {/* {component.articleComponentContentOrUrl.split("\n").map((line, index) => (
+                          <p key={index}>{line}</p>
+                        ))} */}
                       </div>
                     )
                   }
