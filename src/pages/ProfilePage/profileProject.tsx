@@ -69,7 +69,7 @@ const ProfileProject: React.FC = () => {
         <div id="part-2" style={{ maxHeight: '30vh', flex: '1 1 auto', overflow: 'auto', paddingBottom: '50px' }} >
           <Card
             title="2022.02 - 2022.08 | Wealth Management Middle Platform Project"
-            extra={<a href="#">More</a>}
+            extra={<a onClick={() => { navigate("/projectDetailPage?", { state: { pageId: 'middleP' } }) }}>Detail</a>}
             style={{
               width: '100%',
               backgroundColor: '#FCF3EF'
@@ -82,7 +82,7 @@ const ProfileProject: React.FC = () => {
         <div id="part-3" style={{ maxHeight: '30vh', flex: '1 1 auto', overflow: 'auto', paddingBottom: '50px' }} >
           <Card
             title="2022.08 - 2023.08 |  Personal Wealth Management Project"
-            extra={<a href="#">More</a>}
+            extra={<a onClick={() => { navigate("/projectDetailPage?", { state: { pageId: 'marketingM' } }) }}>Detail</a>}
             style={{
               width: '100%',
               backgroundColor: '#FCF3EF'
