@@ -115,7 +115,7 @@ const App: React.FC = () => {
               <Route path="/productDetailPage/:productId" element={token ? <ProductDetailPage /> : <Navigate to="/loginPage" />} />
               <Route path="/introductionPage" element={token ? <InstructionListPage /> : <Navigate to="/loginPage" />} />
               <Route path="/introductionPage/addInstructionVideoPage" element={token ? <AddInstructionVideoPage /> : <Navigate to="/loginPage" />} />
-              <Route path="/testPage" element={<Profile />} />
+              <Route path="/profilePage" element={<Profile />} />
               <Route path="/projectDetailPage" element={<ProjectDetailPage />} />
 
               {/* 

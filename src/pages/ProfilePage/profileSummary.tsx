@@ -25,7 +25,8 @@ const project = [
     img: ivtLogin,
     // titlesub: "Pioneer Aluminium Inventory Management System",
     titlesub: "Pioneer Aluminium Inventory Management System",
-    title: "Login Page"
+    title: "Login Page",
+    project: "EDA",
     // disciption:
     //   "As Uber works through a huge amount of internal management turmoil.",
   },
@@ -33,20 +34,23 @@ const project = [
     img: ivtOrder,
     titlesub: "Pioneer Aluminium Inventory Management System",
     title: "Orders Page",
+    project: "EDA",
   },
   {
     img: akDashboard,
-    titlesub: "Project #3",
-    title: "Minimalist",
+    titlesub: "AK Travel Management System",
+    title: "Dashboard Page",
     disciption:
-      "Different people have different taste, and various types of music, Zimbali Resort",
+      "A dashboard for displaying the number of tourists and the number of different tour groups across different dimensions of year, month, and day.",
+    project: "EDA",
   },
   {
     img: akAllocation,
-    titlesub: "Project #3",
-    title: "Minimalist",
-    disciption:
-      "Different people have different taste, and various types of music, Zimbali Resort",
+    titlesub: "AK Travel Management System",
+    title: "Allocation Page",
+    // disciption:
+    //   "Page for ",
+    project: "EDA",
   },
 ];
 
@@ -100,6 +104,9 @@ const ProfileSummary: React.FC = () => {
             </Tag>
             <Tag bordered={false} color="green">
               Redis
+            </Tag>
+            <Tag bordered={false} color="gold">
+              MongoDB
             </Tag><br />
             Backend Technologies:
             <Tag bordered={false} color="purple">
@@ -112,31 +119,46 @@ const ProfileSummary: React.FC = () => {
               .Net
             </Tag>
             <Tag bordered={false} color="lime">
-              Fastapi
+              RabbitMQ
+            </Tag>
+            <Tag bordered={false} color="lime">
+              RocketMQ
+            </Tag>
+            <Tag bordered={false} color="purple">
+              GraphQL
+            </Tag>
+            <Tag bordered={false} color="magenta">
+              Netty
             </Tag><br />
             Frontend Technologies: <Tag bordered={false} color="gold">
               React
             </Tag>
             <Tag bordered={false} color="lime">
               Redux
+            </Tag>
+            <Tag bordered={false} color="cyan">
+              SASS
+            </Tag>
+            <Tag bordered={false} color="green">
+              Ant Design
             </Tag><br />
-            Message-oriented middleware: <Tag bordered={false} color="gold">
-              .Rabbitmq
-            </Tag>
-            <Tag bordered={false} color="lime">
-              Rocketmq
-            </Tag><br />
-            Tools: <Tag bordered={false} color="purple">
-              Jenkins
-            </Tag>
-            <Tag bordered={false} color="magenta">
-              Docker
-            </Tag>
-            <Tag bordered={false} color="gold">
+            Cloud: <Tag bordered={false} color="gold">
               AWS
             </Tag>
             <Tag bordered={false} color="lime">
-              Nginx
+              Docker
+            </Tag>
+            <Tag bordered={false} color="purple">
+              Jenkins
+            </Tag>
+            <Tag bordered={false} color="magenta">
+              JIRA
+            </Tag>
+            <Tag bordered={false} color="gold">
+              Confluence
+            </Tag>
+            <Tag bordered={false} color="lime">
+              GitHub
             </Tag><br />
             {" "}
           </p>
@@ -151,25 +173,33 @@ const ProfileSummary: React.FC = () => {
           bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
           style={{ height: '400px' }}
         >
-          <p className="text-dark">
-            {" "}
-            Passionate software developer with 4
-            years of experience in designing, developing, and maintaining robust applications.
-            Specializing in Spring, React. Worked on a wide range of projects,
-            from building scalable backend systems to developing user-friendly front-end interfaces.{" "}
-          </p>
-          <hr className="my-25" />
-          <Descriptions title="Contact Information">
-            <Descriptions.Item label="Mobile" span={3}>
-              (61) 426364586
-            </Descriptions.Item>
-            <Descriptions.Item label="Email" span={3}>
-              ljlsjcnh649692327@gmail.com
-            </Descriptions.Item>
-            <Descriptions.Item label="Location" span={3}>
-              Melbourne, Victoria
-            </Descriptions.Item>
-            {/* <Descriptions.Item label="Social" span={3}>
+          <div
+            style={{
+              height: '320px',       // Fixed height for the scrollable area
+              overflowY: 'auto',     // Enable vertical scrolling
+              paddingTop: 0,
+              paddingBottom: 16,
+            }}
+          >
+            <p className="text-dark">
+              {" "}
+              Passionate Full-Stack Developer with 4 years of experience in designing and developing scalable, high-performance backend solutions using
+              Java, Spring Boot, Python, React, Redux, MySQL, PostgreSQL and Redis.
+              Skilled in microservices architecture, efficient database design, system performance optimization and modern frontend technologies.
+              Eager to leverage my expertise to drive innovation and efficiency in full-stack development.{" "}
+            </p>
+            <hr className="my-25" />
+            <Descriptions title="Contact Information">
+              <Descriptions.Item label="Mobile" span={3}>
+                0426364586
+              </Descriptions.Item>
+              <Descriptions.Item label="Email" span={3}>
+                glenn.jialin@gmail.com
+              </Descriptions.Item>
+              <Descriptions.Item label="Location" span={3}>
+                Clayton South, Melbourne, Victoria
+              </Descriptions.Item>
+              {/* <Descriptions.Item label="Social" span={3}>
               <a href="https://www.linkedin.com/in/jialin-liu-ab3585126/" className="mx-5 px-5">
                 {<LinkedinOutlined />}
               </a>
@@ -177,27 +207,28 @@ const ProfileSummary: React.FC = () => {
                 {<GithubOutlined style={{ color: "#344e86" }} />}
               </a>
             </Descriptions.Item> */}
-          </Descriptions>
-          <Tag icon={<LinkedinOutlined />}
-            color="#55acee"
-            onClick={() => { window.location.href = "https://www.linkedin.com/in/jialin-liu-ab3585126/" }}
-            style={{
-              cursor: 'pointer',  // Hand cursor on hover
-              transition: 'background-color 0.3s',
-            }}
-          >
-            LinkedIn
-          </Tag>
-          <Tag icon={<GithubOutlined />}
-            color="#344e86"
-            onClick={() => { window.location.href = 'https://github.com/Glennnnnn' }}
-            style={{
-              cursor: 'pointer',  // Hand cursor on hover
-              transition: 'background-color 0.3s',
-            }}
-          >
-            GitHub
-          </Tag>
+            </Descriptions>
+            <Tag icon={<LinkedinOutlined />}
+              color="#55acee"
+              onClick={() => { window.location.href = "https://www.linkedin.com/in/jialin-liu-ab3585126/" }}
+              style={{
+                cursor: 'pointer',  // Hand cursor on hover
+                transition: 'background-color 0.3s',
+              }}
+            >
+              LinkedIn
+            </Tag>
+            <Tag icon={<GithubOutlined />}
+              color="#344e86"
+              onClick={() => { window.location.href = 'https://github.com/Glennnnnn' }}
+              style={{
+                cursor: 'pointer',  // Hand cursor on hover
+                transition: 'background-color 0.3s',
+              }}
+            >
+              GitHub
+            </Tag>
+          </div>
         </Card>
       </Col>
       <Col lg={8} className="mb-24" style={{ height: '400px' }}>
@@ -208,29 +239,38 @@ const ProfileSummary: React.FC = () => {
           bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
           style={{ height: '400px' }}
         >
-          <p className="text-dark">
-            <strong>
-              {" "}
-              2020.08 - 2023.08
-              Postal Savings Bank of China <br />
-              Backend Developer, Technical Manager.{" "}
-            </strong>
-          </p>
-          Enterprise Messaging Architecture (EDA) Project.<br />
-          Wealth Management Middle Platform Project.<br />
-          Personal Wealth Management Project.
-          <hr className="my-25" />
-          <p className="text-dark">
-            <strong>
-              {" "}
-              2023.08 - Current
-              Freelance Developer <br />
-              Full-Stack developer.{" "}
-            </strong>
-          </p>
-          Pioneer Aluminium Inventory Management System.<br />
-          AK Travel Management System.<br />
-          WeGroupCarPool Management System.
+          <div
+            style={{
+              height: '320px',       // Fixed height for the scrollable area
+              overflowY: 'auto',     // Enable vertical scrolling
+              paddingTop: 0,
+              paddingBottom: 16,
+            }}
+          >
+            <p className="text-dark">
+              <strong>
+                {" "}
+                2020.08 - 2023.08
+                Postal Savings Bank of China <br />
+                Backend Developer, Technical Manager.{" "}
+              </strong>
+            </p>
+            Enterprise Messaging Architecture (EDA) Project.<br />
+            Wealth Management Middle Platform Project.<br />
+            Personal Wealth Management Project.
+            <hr className="my-25" />
+            <p className="text-dark">
+              <strong>
+                {" "}
+                2023.08 - Current
+                Freelance Developer <br />
+                Full-Stack developer.{" "}
+              </strong>
+            </p>
+            Pioneer Aluminium Inventory Management System.<br />
+            AK Travel Management System.<br />
+            WeGroupCarPool Management System.
+          </div>
         </Card>
       </Col>
     </Row>
@@ -269,11 +309,11 @@ const ProfileSummary: React.FC = () => {
               <div className="card-tag"><strong>{p.titlesub}</strong></div>
               <h5>{p.title}</h5>
               <p>{p.disciption}</p>
-              <Row gutter={[6, 0]} className="card-footer">
+              {/* <Row gutter={[6, 0]} className="card-footer">
                 <Col span={12}>
-                  <Button type="text">VIEW PROJECT</Button>
+                  {<a onClick={() => { navigate("/projectDetailPage?", { state: { pageId: 'EDA' } }) }}>See Detail</a>}
                 </Col>
-              </Row>
+              </Row> */}
             </Card>
           </Col>
         ))}

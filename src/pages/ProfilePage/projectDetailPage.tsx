@@ -75,16 +75,16 @@ const EDAAriticleData: AriticleData =
     {
       "articleComponentId": "00000005",
       "articleComponentType": "text",
-      "articleComponentContentOrUrl": "<h2>Resposibilities:</h2><h3>Phase One:</h3>" +
-        "<p>Primarily responsible for the development of features related to the management control center. Key tasks included:" +
-        "Setting up the project based on Spring Boot and developing backend functionalities such as system configuration management, node configuration, topic configuration, pushing configuration data to the configuration center, receiving, and processing alarm notifications from the monitoring center." +
-        "Developed nearly 100 Restful APIs, The overall development adhered to standard software development principles and practices. Optimizing the project structure to enhance scalability." +
-        "Designed the database according to requirements and optimized multiple database indexes.</p>" +
-        "<h3>Phase Two:</h3>" +
-        "<p>Primarily responsible for the development of the SDK project. Key tasks included:" +
-        "Based on the original project, developed proxy functionality for integrating with C clients using Netty to address the partial lack of support for C client features in RocketMQ." +
-        "Optimized the multithreading logic of the original project, achieving an approximate 10% improvement in daily throughput." +
-        "Extended fields in the original messaging protocol to meet upstream and downstream system requirements, enhancing the ability to track message links.</p>" +
+      "articleComponentContentOrUrl": "<h2>Resposibilities:</h2>" +
+        "<ul>" +
+        " <li>Participated in architectural design and technical stack selection, influencing system scalability, performance, and long-term maintainability.</li>" +
+        " <li>Built a management control center with Java and Spring Cloud to manage RocketMQ producers, consumers, and topics across multiple systems.</li>" +
+        " <li>Developed and optimized RESTful APIs for configuration management, ensuring efficient and reliable data exchange.</li>" +
+        "<li>Optimized web performance. Improved API response time by 20% through query optimization and caching strategies, enhancing system performance and scalability.</li>" +
+        "<li>Supported CI/CD deployment pipelines with Jenkins, ensuring quality control and enabling trunk-based releases in a monorepo environment.</li>" +
+        "<li>Demonstrated experience in concurrency for high-volume messaging by implementing multi-threaded services, resulting in a 10% improvement in daily throughput.</li>" +
+        "<li>Implemented a monitoring system using Prometheus and Grafana with RocketMQ, enhancing system debugging and monitoring capabilities by providing real-time insights into message queues, performance metrics, and overall system health.</li>" +
+        "</ul>" +
         "<p><strong>Technology Stack:</strong> SpringBoot, React, PostgreSql, Redis, RocketMq</p>",
       "ariticleComponentTitle": "Project Structure"
     },
@@ -117,28 +117,31 @@ const middlePAriticleData: AriticleData =
       "articleComponentId": "00000003",
       "articleComponentType": "text",
       "articleComponentContentOrUrl":
-        "Development efforts will include providing services that support multiple upstream interface invocation modes to retrieve data, optimizing data processing and persistence and offering foundational functionalities for data access. The service makes daily calls to the ESB system to query multiple datasets, including transaction code datasets, customer category code datasets, and identity category code datasets." +
+        "Development efforts will include providing services that support multiple upstream interface invocation modes to retrieve data, optimizing data processing and persistence and offering foundational functionalities for data access. The service makes daily calls to the ESB system to query multiple datasets, including transaction code datasets, customer category code datasets, and identity category code datasets. " +
         "The service will also handle multiple files distributed daily by the EDB system, including customer, merchant, and product information. Using a multi-threaded approach, the service will process data volumes reaching tens of millions daily.",
       "ariticleComponentTitle": "EDA Project Structure"
     },
     {
       "articleComponentId": "00000004",
       "articleComponentType": "text",
-      "articleComponentContentOrUrl": "<p>Phase One:</p>" +
-        "<p>Primarily responsible for the development of features related to the management control center. Key tasks included:" +
-        "Setting up the project based on Spring Boot and developing backend functionalities such as system configuration management, node configuration, topic configuration, pushing configuration data to the configuration center, receiving, and processing alarm notifications from the monitoring center." +
-        "Developed nearly 100 Restful APIs, The overall development adhered to standard software development principles and practices. Optimizing the project structure to enhance scalability." +
-        "Designed the database according to requirements and optimized multiple database indexes.</p>" +
-        "<p>Phase Two:</p>" +
-        "<p>Primarily responsible for the development of the SDK project. Key tasks included:" +
-        "Based on the original project, developed proxy functionality for integrating with C clients using Netty to address the partial lack of support for C client features in RocketMQ." +
-        "Optimized the multithreading logic of the original project, achieving an approximate 10% improvement in daily throughput." +
-        "Extended fields in the original messaging protocol to meet upstream and downstream system requirements, enhancing the ability to track message links.</p>" +
-        "<br />" +
-        "<p><strong>Technology Stack:</strong></p>" +
-        "<p> React, CSS, and HTML</p>",
-      "ariticleComponentTitle": "Project Structure"
+      "articleComponentContentOrUrl": "<h3>Resposibilities:</h3>" +
+        `<ul>
+      <li>Played a key role in architectural design and technical stack selection for the project.</li>
+      <li>Designed and implemented workflows for file processing and database integration in collaboration with upstream systems.</li>
+      <li>Developed and tested 80+ API communication with upstream systems, ensuring reliable data exchange.</li>
+      <li>Designed and implemented a multi-threaded data storage solution to address the high data volume issue, improving database performance by 15%.</li> 
+      <li>Improved API response times by 20% through optimized database queries and caching strategies.</li>
+        </ul>`+
+        "<br />",
+      "ariticleComponentTitle": "Resposibilities"
     },
+    {
+      "articleComponentId": "00000005",
+      "articleComponentType": "text",
+      "articleComponentContentOrUrl": "<h3>Technology Stack:</h3>" +
+        "<p> Java, Spring Cloud, Redis, PostgreSql, RabbitMQ, React, CSS, and HTML</p>",
+      "ariticleComponentTitle": "Technology Stack"
+    }
   ]
 }
 
