@@ -1,3 +1,8 @@
+/**
+ * All data that should be fetched from backend is now set to fix values until the backend functions with query data from database is finished.
+ */
+
+
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 

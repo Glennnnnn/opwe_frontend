@@ -107,10 +107,10 @@ const AddInstructionVideoPage: React.FC = () => {
         console.log("aaa")
         console.log(payload)
         if (payload.msg === "SUCCESS") {
-          message.success("发送信息成功");
+          message.success("Msg sent successfully!");
           form.resetFields();
         } else {
-          message.error("发送信息失败");
+          message.error("Msg sent failed!");
         }
       })
       .catch((error) => {

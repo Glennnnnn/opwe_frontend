@@ -1,3 +1,7 @@
+/**
+ * All data that should be fetched from backend is now set to fix values until the backend functions with query data from database is finished
+ */
+
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -29,6 +33,7 @@ const ProfileProject: React.FC = () => {
       targetElement.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the target element
     }
   };
+
   return <div
     className="profile-project-body"
     style={{
@@ -107,7 +112,6 @@ const ProfileProject: React.FC = () => {
         <div id="part-4" style={{ maxHeight: '30vh', flex: '1 1 auto', overflow: 'auto', paddingBottom: '50px' }} >
           <Card
             title="2023.12 - Current | Pioneer Aluminium Inventory Management System"
-            // extra={<a onClick={() => { navigate("/projectDetailPage?", { state: { pageId: 'middleP' } }) }}>Detail</a>}
             style={{
               width: '100%',
               backgroundColor: '#FCF3EF'

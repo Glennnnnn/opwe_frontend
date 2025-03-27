@@ -13,7 +13,7 @@ function BlogPage() {
         navigate(error.response.headers.location)
       } else {
         // 处理其他错误
-        console.error('请求错误:', error);
+        console.error('Request error:', error);
       }
     }
   }

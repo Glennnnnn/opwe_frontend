@@ -1,3 +1,8 @@
+/**
+ * All data that should be fetched from backend is now set to fix values until the backend functions with query data from database is finished.
+ */
+
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -27,8 +32,6 @@ const project = [
     titlesub: "Pioneer Aluminium Inventory Management System",
     title: "Login Page",
     project: "EDA",
-    // disciption:
-    //   "As Uber works through a huge amount of internal management turmoil.",
   },
   {
     img: ivtOrder,

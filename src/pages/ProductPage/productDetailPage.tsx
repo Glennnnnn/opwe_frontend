@@ -30,7 +30,7 @@ const ProductDetailPage: React.FC = () => {
   };
 
   const handleProductDetailPageClick = () => {
-    navigate('/productDetailPage/${productId}'); // Replace with your actual route path
+    navigate('/productDetailPage/${productId}'); // Replace with the actual route path
   };
 
   const dataSource: Product[] = [

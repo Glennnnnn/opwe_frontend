@@ -1,3 +1,6 @@
+/**
+ * All data that hsould be fetch from backend is now set to fix values until the backend functions with query data from database is finished.
+ */
 import React from "react";
 import { Card, Typography, List, Divider, Col, Row } from "antd";
 

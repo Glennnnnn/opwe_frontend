@@ -259,10 +259,10 @@ const AddProductPage: React.FC = () => {
         console.log("aaa")
         console.log(payload)
         if (payload.msg === "SUCCESS") {
-          message.success("发送信息成功");
+          message.success("Message was sent successfully.");
           form.resetFields();
         } else {
-          message.error("发送信息失败");
+          message.error("Message was sent failed.");
         }
       })
       .catch((error) => {
